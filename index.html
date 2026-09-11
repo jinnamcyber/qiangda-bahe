@@ -21,7 +21,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}button,inpu
 .callout{position:absolute;left:50%;top:50%;max-width:84vw;width:max-content;transform:translate(-50%,-50%) scale(0) rotate(-5deg);font-size:5.3vh;font-weight:1000;line-height:1.2;padding:1.4vh 2.3vw;background:var(--paper);border:.5vh solid var(--ink);border-radius:2vh;box-shadow:.5vw .8vh 0 var(--ink);text-align:center;pointer-events:none;transition:transform .25s cubic-bezier(.2,1.5,.5,1)}.callout.show{transform:translate(-50%,-50%) scale(1) rotate(-5deg)}
 .panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:1.1vh 2vw 1vh;gap:1vh;background:var(--paper)}.meta{display:flex;align-items:center;justify-content:space-between;gap:1vw;font-size:1.8vh;font-weight:900;min-height:3.3vh}.meta>div:first-child{display:flex;gap:.65vw}.tag{display:inline-block;white-space:nowrap;padding:.4vh .85vw;border: .23vh solid var(--ink);border-radius:.8vh;background:#F5E4AC}#domTag{background:#DCEBD0}#typeTag{background:var(--ink);color:var(--paper)}.timer{position:relative;width:14vw;flex-shrink:0;height:2.6vh;background:#E6DDC6;border:var(--edge);border-radius:2vh;overflow:hidden}.timer i{display:block;width:100%;height:100%;background:#6DAB59;transition:width 1s linear}.timer:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 2.4vw,#FFFCEF 2.4vw 2.55vw)}.timer i.low{background:var(--red);animation:urgent .55s steps(2) infinite}
 .q{font-size:3.05vh;line-height:1.35;font-weight:900;padding:1.15vh 1.5vw 1.15vh 2.1vw;border:var(--edge);border-radius:1.4vh;background:white;box-shadow:0 .4vh 0 #D7CEB7;white-space:pre-line;max-height:12vh;min-height:6.6vh;overflow:auto;border-left:1vw solid var(--sand);flex-shrink:0}
-.sides{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2vw;flex:1;min-height:0}.side{--team:var(--red);display:flex;flex-direction:column;gap:.7vh;min-height:0;padding:.8vh .8vw;border:var(--edge);border-radius:1.6vh;background:#FAE5DB;position:relative}.side.s1{--team:var(--blue);background:#E2EAF8}.head{display:flex;align-items:center;justify-content:space-between;gap:1vw;min-height:3.3vh;font-size:2vh;font-weight:900;color:var(--team);padding:0 .3vw}.head:after{content:"準備作答";font-size:1.5vh;border:.2vh solid currentColor;border-radius:1vh;padding:.2vh .7vw}.side.done .head:after{content:"✓ 已交卷";background:var(--team);color:white;border-color:var(--team)}.side.done{border-color:var(--team)}.side.locked button{pointer-events:none}.body{flex:1;min-height:0;overflow:auto;padding:.2vh .15vw .6vh;scrollbar-width:thin}.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.1vh .8vw}.col{display:flex;flex-direction:column;gap:.7vh}.opt{position:relative;display:flex;align-items:center;gap:.8vw;min-height:6vh;flex-shrink:0;padding:.65vh .9vw;border-radius:1.2vh;background:var(--paper);box-shadow:0 .35vh 0 var(--ink);font-size:2.8vh;text-align:left;line-height:1.2;transition:background .15s,transform .15s;overflow-wrap:anywhere}.opt b{display:grid;place-items:center;width:3.7vh;height:3.7vh;flex-shrink:0;background:var(--team);color:white;font-size:2.1vh;border-radius:.8vh;border:.2vh solid var(--ink)}.opt span{flex:1}.grid2 .opt{font-size:3.1vh}.grid2 .opt b{align-self:flex-start}.opt.picked{background:var(--sand);box-shadow:0 .15vh 0 var(--ink);transform:translateY(.2vh)}.opt.picked:after{content:"●";font-size:2vh}.opt.right,.np-display.right{background:#D8EDBC;border-color:var(--ok);box-shadow:0 .35vh 0 var(--ok)}.opt.right:after{content:"✓";color:var(--ok);font-size:3vh}.opt.wrong,.np-display.wrong{background:#F8C9BE;border-color:#A42A26;box-shadow:0 .35vh 0 #A42A26}.opt.wrong:after{content:"×";color:#A42A26;font-size:3vh}.opt.dim{background:#EAE7DE;color:#777B73;border-color:#A2A79C;box-shadow:0 .25vh 0 #A2A79C}.opt.dim b{background:#777B73}.confirm{border-radius:1.2vh;min-height:6vh;padding:.5vh 3vw;font-size:2.6vh;background:var(--team);color:white;box-shadow:0 .35vh 0 var(--ink);flex-shrink:0;width:100%;margin-top:auto}.confirm:disabled{background:#D0D2C9;color:#646B61;border-color:#889080;box-shadow:0 .25vh 0 #889080}.np-display{font-size:3.2vh;line-height:1.1;min-height:6vh;border:var(--edge);border-radius:1vh;background:#FFFCEF;box-shadow:inset 0 .4vh 0 #E1DBC5;text-align:right;padding:.9vh 1vw;font-weight:900;font-variant-numeric:tabular-nums;flex-shrink:0}.np-display small{font-size:2vh;margin-left:1vw}.np-keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.65vh .7vw;flex-shrink:0}.np-keys button{min-height:6vh;border-radius:1vh;background:#FFFCEF;box-shadow:0 .3vh 0 var(--ink);font-size:2.9vh}.np-keys button:nth-child(4n){background:#F1DDA4}.ord{display:flex;flex-direction:column;gap:.8vh}.ord .opt:before{content:"⠿";color:#788172;font-size:2.5vh}.ord .opt.sel{background:var(--sand);outline:.3vh dashed var(--ink);outline-offset:-.8vh}.ord .opt{padding-right:1.5vw}.body.col:has(.ord):before{content:"點選兩張卡片，交換位置";font-size:1.7vh;font-weight:700;flex-shrink:0}.body.col>div:last-child:not(.np-keys):not(.np-display):not(.ord){flex-shrink:0}
+.sides{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2vw;flex:1;min-height:0}.side{--team:var(--red);display:flex;flex-direction:column;gap:.7vh;min-height:0;padding:.8vh .8vw;border:var(--edge);border-radius:1.6vh;background:#FAE5DB;position:relative}.side.s1{--team:var(--blue);background:#E2EAF8}.head{display:flex;align-items:center;justify-content:space-between;gap:1vw;min-height:3.3vh;font-size:2vh;font-weight:900;color:var(--team);padding:0 .3vw}.head:after{content:"準備作答";font-size:1.5vh;border:.2vh solid currentColor;border-radius:1vh;padding:.2vh .7vw}.side.done .head:after{content:"✓ 已交卷";background:var(--team);color:white;border-color:var(--team)}.side.done{border-color:var(--team)}.side.locked button{pointer-events:none}.body{flex:1;min-height:0;overflow:auto;padding:.2vh .15vw .6vh;scrollbar-width:thin}.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.1vh .8vw}.col{display:flex;flex-direction:column;gap:.7vh}.opt{position:relative;display:flex;align-items:center;gap:.8vw;min-height:6vh;flex-shrink:0;padding:.65vh .9vw;border-radius:1.2vh;background:var(--paper);box-shadow:0 .35vh 0 var(--ink);font-size:2.8vh;text-align:left;line-height:1.2;transition:background .15s,transform .15s;overflow-wrap:anywhere}.opt b{display:grid;place-items:center;width:3.7vh;height:3.7vh;flex-shrink:0;background:var(--team);color:white;font-size:2.1vh;border-radius:.8vh;border:.2vh solid var(--ink)}.opt span{flex:1}.grid2 .opt{font-size:3.1vh}.grid2 .opt b{align-self:flex-start}.opt.picked{background:var(--sand);box-shadow:0 .15vh 0 var(--ink);transform:translateY(.2vh)}.opt.picked:after{content:"●";font-size:2vh}.opt.right,.np-display.right{background:#D8EDBC;border-color:var(--ok);box-shadow:0 .35vh 0 var(--ok)}.opt.right:after{content:"✓";color:var(--ok);font-size:3vh}.opt.wrong,.np-display.wrong{background:#F8C9BE;border-color:#A42A26;box-shadow:0 .35vh 0 #A42A26}.opt.wrong:after{content:"×";color:#A42A26;font-size:3vh}.opt.dim{background:#EAE7DE;color:#777B73;border-color:#A2A79C;box-shadow:0 .25vh 0 #A2A79C}.opt.dim b{background:#777B73}.confirm{border-radius:1.2vh;min-height:6vh;padding:.5vh 3vw;font-size:2.6vh;background:var(--team);color:white;box-shadow:0 .35vh 0 var(--ink);flex-shrink:0;width:100%;margin-top:auto}.confirm:disabled{background:#D0D2C9;color:#646B61;border-color:#889080;box-shadow:0 .25vh 0 #889080}.np-display{font-size:3.2vh;line-height:1.1;min-height:6vh;border:var(--edge);border-radius:1vh;background:#FFFCEF;box-shadow:inset 0 .4vh 0 #E1DBC5;text-align:right;padding:.9vh 1vw;font-weight:900;font-variant-numeric:tabular-nums;flex-shrink:0}.np-display small{font-size:2vh;margin-left:1vw}.np-keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.65vh .7vw;flex-shrink:0}.np-keys button{min-height:6vh;border-radius:1vh;background:#FFFCEF;box-shadow:0 .3vh 0 var(--ink);font-size:2.9vh}.np-keys button:nth-child(4n){background:#F1DDA4}.ord{display:flex;flex-direction:column;gap:.8vh}.ord .opt:before{content:"⠿";color:#788172;font-size:2.5vh}.ord .opt.sel{background:var(--sand);outline:.3vh dashed var(--ink);outline-offset:-.8vh}.ord .opt{padding-right:1.5vw}.body.col:has(.ord):before{content:"拖動卡片排次序，或點兩張交換";font-size:1.7vh;font-weight:700;flex-shrink:0}.body.col>div:last-child:not(.np-keys):not(.np-display):not(.ord){flex-shrink:0}
 .foot{display:flex;gap:1vw;align-items:center;min-height:6vh;padding-right:8vw;flex-shrink:0}.why{opacity:0;flex:1;font-size:2vh;font-weight:700;line-height:1.3;max-height:6vh;overflow:auto}.why.show{opacity:1}.next{visibility:hidden;min-height:6vh;flex-shrink:0;border-radius:1.2vh;background:var(--ink);color:var(--paper);padding:.6vh 2vw;font-size:2.5vh;box-shadow:0 .3vh 0 #71816A}.next.show{visibility:visible}.fs{position:absolute;right:2vw;bottom:1vh;font-size:1.7vh;border-radius:1vh;padding:.5vh .8vw;min-height:6vh;background:#EEE9DB}
 #win{align-items:center;justify-content:center;text-align:center;gap:2vh;padding:3vh;isolation:isolate;overflow:hidden;color:var(--paper)}#win.red{background:#C93631}#win.blue{background:#204BC3}#win.draw{background:#38584B}#win:before{content:"";position:absolute;inset:-40vh -30vw;background:repeating-conic-gradient(from 0deg,transparent 0deg 20deg,#FFFCEF0D 20deg 40deg);z-index:-1;animation:sunburst 80s linear infinite}#win:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(110deg,transparent 0 7vw,#F5D878 7vw 8vw,transparent 8vw 13vw,#FFFCEF 13vw 13.5vw,transparent 13.5vw 20vw) top/100% 2vh no-repeat;animation:ribbons 2s ease-in-out infinite alternate}#win h2{font-size:7.5vh;line-height:1.15;max-width:88vw;-webkit-text-stroke:.5vh var(--ink);paint-order:stroke fill;text-shadow:0 .65vh 0 var(--ink)}#win p{font-size:2.8vh;font-weight:800}#win .miss{font-size:2.2vh;line-height:1.5;max-width:80vw;max-height:15vh;overflow:auto;background:var(--paper);color:var(--ink);border:var(--edge);border-radius:1.6vh;padding:1.2vh 2vw;box-shadow:var(--shadow)}#win .big{background:var(--sand);color:var(--ink)}#win .big:after{color:var(--ink)}.trophy{width:17vw;height:22vh;overflow:visible;filter:drop-shadow(0 .6vh 0 #24332E);animation:trophy 2.4s ease-in-out infinite}.victory-kids{position:absolute;bottom:2vh;width:20vw;height:25vh;overflow:visible;z-index:-1}.victory-kids.red-kids{left:1vw}.victory-kids.blue-kids{right:1vw}#win.red .red-kids,#win.blue .blue-kids{animation:cheer .7s ease-in-out infinite alternate}#win.red .blue-kids,#win.blue .red-kids{transform:translateY(7vh) rotate(12deg);opacity:.8}
 .kid-motion{transform-box:fill-box;transform-origin:60% 100%;animation:ready 2.4s ease-in-out infinite}.kid-1 .kid-motion{animation-delay:-.6s}.kid-2 .kid-motion{animation-delay:-1.2s}.kid-3 .kid-motion{animation-delay:-1.8s}.dust{opacity:0}#game[data-result="0"] #teamL .kid-motion,#game[data-result="1"] #teamR .kid-motion{animation:heave .7s ease-in-out 2}#game[data-result="1"] #teamL .kid-motion,#game[data-result="0"] #teamR .kid-motion{animation:stumble .65s ease-in-out 2}#game[data-result="none"] .rope-texture,#game[data-result="timeout"] .rope-texture{animation:shake .16s ease-in-out 6}#game[data-result="none"] .dust,#game[data-result="timeout"] .dust{animation:dust 1.2s ease-out}#game[data-result="0"] .score.l,#game[data-result="1"] .score.r{animation:cheer .35s ease-in-out 4}
@@ -29,6 +29,21 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}button,inpu
 .seated{display:none}#win.red .blue-kids .standing,#win.blue .red-kids .standing{display:none}#win.red .blue-kids .seated,#win.blue .red-kids .seated{display:inline}#win.red .blue-kids,#win.blue .red-kids{transform:none;opacity:1}
 @media(max-aspect-ratio:3/2){.arena{flex-basis:24vh}.panel{gap:.8vh}.meta{font-size:1.55vh;gap:.5vw}.tag{padding:.4vh .6vw}.timer{width:12vw}.q{font-size:2.8vh}.opts{width:90vw}.opts select{font-size:2vh}.team-set input{width:29vw}.grid2 .opt{font-size:2.7vh}.score{font-size:2.2vh}.victory-kids{width:17vw}.start-admin .note{flex-basis:100%}#start{gap:1.5vh}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ===== 白板實測後的調整（2026-09-11）：字級加大、題目欄撐滿、拖拉排序、靜音鍵 ===== */
+.panel{padding:1vh 1.6vw 1vh}
+.meta{font-size:2.3vh}.meta .tag{font-size:2.2vh}
+.q{font-size:4.4vh;line-height:1.3;max-height:19vh;min-height:8.5vh;padding:1.4vh 2vw 1.4vh 2.4vw;width:100%}
+.opt{font-size:4.1vh;min-height:8vh;gap:1.4vw}.opt b{width:5.2vh;height:5.2vh;font-size:3vh;border-radius:1.1vh}
+.grid2 .opt{font-size:4.6vh;min-height:9vh}
+.col .opt,.ord .opt{font-size:3.9vh;min-height:6.8vh}
+.np-display{font-size:5vh;min-height:7vh}.np-keys button{font-size:4.2vh;min-height:6.2vh}
+.confirm{font-size:3.4vh}
+.why{font-size:2.7vh;max-height:8vh}
+.ord .opt{touch-action:none;transition:transform .12s;position:relative}
+.ord .opt.dragging{transition:none;z-index:5;box-shadow:0 1.2vh 1.6vh rgba(0,0,0,.25);background:#FFF3B0}
+#muteBtn{right:auto;left:2vw}
+@media (prefers-reduced-motion:reduce){.ord .opt{transition:none}}
 </style>
 </head>
 <body>
@@ -109,6 +124,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}button,inpu
       <button class="next" id="nextBtn">下一題 ▶</button>
     </div>
   </div>
+  <button class="fs" id="muteBtn">🔊 聲音</button>
   <button class="fs" id="fsBtn">全螢幕</button>
 </section>
 
@@ -229,7 +245,7 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
 </script>
 <script>
 /* src/types/order.js */
-/* 排序：3–4 張卡，按一下選卡、再按另一張交換位置，按「確定」交卷。 */
+/* 排序：3–4 張卡，拖動卡片上下重排（或點兩張交換），按「確定」交卷。 */
 (function () {
   const T = globalThis.TUG = globalThis.TUG || {};
   T.types = T.types || {};
@@ -241,7 +257,7 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
 
   function render(q, side, el, onSubmit) {
     el.innerHTML = ""; el.className = "body col";
-    let done = false, selected = -1;
+    let done = false, selected = -1, drag = null;
     let cur = q.view.slice();                      // 目前排列：位置 → 選項索引
     const list = document.createElement("div"); list.className = "ord";
     const ok = document.createElement("button"); ok.className = "confirm"; ok.textContent = "確定";
@@ -252,9 +268,41 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
       cur.forEach((oi, pos) => {
         const b = document.createElement("button"); b.className = "opt" + (pos === selected ? " sel" : ""); b.dataset.oi = oi;
         b.innerHTML = `<b>${pos + 1}</b><span>${q.options[oi]}</span>`;
-        b.addEventListener("pointerdown", e => { e.preventDefault(); tap(pos); });
+        b.addEventListener("pointerdown", e => { e.preventDefault(); startDrag(e, pos, b); });
         list.appendChild(b);
       });
+    }
+    // 拖拉：按住卡片上下移動即重排；沒有移動就當作點選（點兩張交換）。每張卡各自捕捉指標，兩隊可同時拖。
+    function startDrag(e, pos, btn) {
+      if (done || drag) return;
+      const slots = [...list.children].map(c => c.getBoundingClientRect());
+      const rowH = slots.length > 1 ? slots[1].top - slots[0].top : (slots[0] ? slots[0].height : 0);
+      drag = { id: e.pointerId, from: pos, to: pos, startY: e.clientY, moved: false };
+      try { btn.setPointerCapture(e.pointerId); } catch { /* 舊瀏覽器 */ }
+      const move = ev => {
+        if (!drag || ev.pointerId !== drag.id) return;
+        const dy = ev.clientY - drag.startY;
+        if (!drag.moved && Math.abs(dy) < 8) return;
+        if (!drag.moved) { drag.moved = true; btn.classList.add("dragging"); }
+        btn.style.transform = `translateY(${dy}px)`;
+        let to = slots.findIndex(r => ev.clientY < r.top + r.height / 2); if (to === -1) to = slots.length - 1;
+        drag.to = to;
+        [...list.children].forEach((c, i) => {
+          if (i === drag.from) return;
+          const shift = (drag.from < i && i <= to) ? -rowH : (to <= i && i < drag.from) ? rowH : 0;
+          c.style.transform = shift ? `translateY(${shift}px)` : "";
+        });
+      };
+      const up = ev => {
+        if (!drag || ev.pointerId !== drag.id) return;
+        btn.removeEventListener("pointermove", move); btn.removeEventListener("pointerup", up); btn.removeEventListener("pointercancel", up);
+        const d = drag; drag = null;
+        if (d.moved) {
+          if (d.to !== d.from) { const [item] = cur.splice(d.from, 1); cur.splice(d.to, 0, item); }
+          selected = -1; draw();
+        } else tap(pos);
+      };
+      btn.addEventListener("pointermove", move); btn.addEventListener("pointerup", up); btn.addEventListener("pointercancel", up);
     }
     function tap(pos) {
       if (done) return;
@@ -270,7 +318,7 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
       reveal(correct) {
         [...list.children].forEach((b, pos) => b.classList.add(cur[pos] === q.answer[pos] ? "right" : "wrong"));
         if (!correct) {
-          const ans = document.createElement("div"); ans.style.cssText = "font-size:2.4vh;font-weight:700;margin-top:.6vh";
+          const ans = document.createElement("div"); ans.style.cssText = "font-size:2.6vh;font-weight:700;margin-top:.6vh";
           ans.textContent = "正確順序：" + q.answer.map(oi => q.options[oi]).join(" → ");
           el.appendChild(ans);
         }
@@ -330,6 +378,79 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
   }
 
   T.types.multi = { judge, render, limit: 30, submitOnPick: false };
+})();
+
+</script>
+<script>
+/* src/audio.js */
+/* 配樂與音效：全部用 WebAudio 即時合成，離線單檔不需音檔。開局按鈕會解鎖 AudioContext。 */
+(function () {
+  const T = globalThis.TUG = globalThis.TUG || {};
+  let ctx = null, master = null, bgmGain = null, bgmTimer = null, bgmOn = false, muted = false;
+  try { muted = localStorage.getItem("tug.muted") === "1"; } catch { /* 無儲存空間也能玩 */ }
+
+  function ensure() {
+    if (ctx) return ctx;
+    const AC = globalThis.AudioContext || globalThis.webkitAudioContext;
+    if (!AC) return null;
+    ctx = new AC();
+    master = ctx.createGain(); master.gain.value = muted ? 0 : 1; master.connect(ctx.destination);
+    bgmGain = ctx.createGain(); bgmGain.gain.value = 0.16; bgmGain.connect(master);
+    return ctx;
+  }
+  const now = () => (ensure() ? ctx.currentTime : 0);
+  function tone(freq, t0, dur, o) {
+    o = o || {}; if (!ensure()) return;
+    const osc = ctx.createOscillator(), g = ctx.createGain(), out = o.out || master;
+    osc.type = o.type || "square"; osc.frequency.setValueAtTime(freq, t0);
+    if (o.slide) osc.frequency.exponentialRampToValueAtTime(Math.max(30, freq + o.slide), t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(o.vol || 0.2, t0 + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    osc.connect(g).connect(out); osc.start(t0); osc.stop(t0 + dur + 0.03);
+  }
+  function noise(t0, dur, vol, out) {
+    if (!ensure()) return;
+    const n = Math.floor(ctx.sampleRate * dur), buf = ctx.createBuffer(1, n, ctx.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const s = ctx.createBufferSource(); s.buffer = buf;
+    const f = ctx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 900;
+    const g = ctx.createGain(); g.gain.value = vol || 0.2;
+    s.connect(f).connect(g).connect(out || master); s.start(t0);
+  }
+  const SFX = {
+    tap()     { const t = now(); tone(880, t, 0.05, { vol: 0.1 }); },
+    submit()  { const t = now(); tone(660, t, 0.07, { vol: 0.14 }); tone(990, t + 0.08, 0.1, { vol: 0.14 }); },
+    correct() { const t = now(); [523, 659, 784, 1047].forEach((f, i) => tone(f, t + i * 0.09, 0.2, { type: "triangle", vol: 0.3 })); },
+    wrong()   { const t = now(); tone(220, t, 0.25, { type: "sawtooth", vol: 0.18, slide: -80 }); tone(180, t + 0.22, 0.3, { type: "sawtooth", vol: 0.16, slide: -60 }); },
+    pull()    { const t = now(); noise(t, 0.35, 0.25); tone(300, t, 0.35, { type: "triangle", vol: 0.25, slide: 260 }); },
+    tick()    { const t = now(); tone(1300, t, 0.04, { vol: 0.09 }); },
+    timeout() { const t = now(); [0, 0.18, 0.36].forEach(d => tone(440, t + d, 0.15, { vol: 0.18 })); },
+    both()    { const t = now(); tone(330, t, 0.15, { type: "triangle", vol: 0.2 }); tone(262, t + 0.15, 0.3, { type: "triangle", vol: 0.2 }); },
+    win()     { const t = now(); [523, 523, 523, 659, 784, 659, 784, 1047].forEach((f, i) => tone(f, t + i * 0.13, i === 7 ? 0.7 : 0.14, { vol: 0.26 })); noise(t + 0.9, 0.7, 0.14); },
+    start()   { const t = now(); [392, 523, 659, 784].forEach((f, i) => tone(f, t + i * 0.1, 0.16, { type: "triangle", vol: 0.28 })); },
+  };
+
+  // 背景音樂：132 BPM、8 小節循環，C 大調運動會風；旋律方波、低音三角波、輕微踩鈸
+  const BPM = 132, BEAT = 60 / BPM;
+  const MEL = [72, 74, 76, 79, 76, 74, 72, 0, 69, 72, 74, 76, 74, 72, 69, 0, 67, 69, 72, 74, 76, 74, 72, 74, 76, 79, 76, 74, 72, 0, 79, 0];
+  const BASS = [48, 48, 53, 53, 55, 55, 55, 48];
+  const midi = m => 440 * Math.pow(2, (m - 69) / 12);
+  let nextBeat = 0, beatIdx = 0;
+  function schedule() {
+    if (!ctx) return;
+    while (nextBeat < ctx.currentTime + 0.6) {
+      const i = beatIdx % 32, bar = Math.floor(i / 4), sub = i % 4;
+      if (MEL[i]) tone(midi(MEL[i]), nextBeat, BEAT * 0.85, { type: "square", vol: 0.11, out: bgmGain });
+      tone(midi(BASS[bar] + (sub % 2 ? 7 : 0)), nextBeat, BEAT * 0.5, { type: "triangle", vol: 0.22, out: bgmGain });
+      if (sub % 2 === 0) noise(nextBeat, 0.04, 0.05, bgmGain);
+      nextBeat += BEAT; beatIdx++;
+    }
+  }
+  function startBgm() { if (!ensure() || bgmOn) return; bgmOn = true; nextBeat = ctx.currentTime + 0.05; beatIdx = 0; schedule(); bgmTimer = setInterval(schedule, 200); }
+  function stopBgm() { bgmOn = false; clearInterval(bgmTimer); bgmTimer = null; }
+  function duck(on) { if (bgmGain) bgmGain.gain.setTargetAtTime(on ? 0.05 : 0.16, now(), 0.1); }
+  function unlock() { const c = ensure(); if (c && c.state === "suspended") c.resume(); }
+  function setMuted(m) { muted = !!m; if (master) master.gain.setTargetAtTime(muted ? 0 : 1, now(), 0.02); try { localStorage.setItem("tug.muted", muted ? "1" : "0"); } catch { /* 忽略 */ } }
+  T.audio = { unlock, play(name) { if (!muted && SFX[name]) { ensure(); SFX[name](); } }, startBgm, stopBgm, duck, setMuted, isMuted: () => muted };
 })();
 
 </script>
@@ -410,9 +531,10 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
     const rng = opts.rng || Math.random;
     const n = opts.n || 10;
     const notes = { fallbackAll: false, repeats: 0 };
-    let pool = bank.filter(i => opts.subject === "混合" || i.subject === opts.subject);
     let scope = opts.scope || "taught";
-    if (scope !== "taught" && scope !== "all") pool = pool.filter(i => i.topic === scope);
+    // 指定單一主題時以主題為準（主題已隱含科目），否則按科目篩
+    let pool = (scope !== "taught" && scope !== "all") ? bank.filter(i => i.topic === scope)
+      : bank.filter(i => opts.subject === "混合" || i.subject === opts.subject);
     if (scope === "taught" && (!opts.taughtSet || opts.taughtSet.size === 0)) { scope = "all"; notes.fallbackAll = true; }
     const isTaught = i => scope === "taught" && opts.taughtSet.has(i.topic);
 
@@ -504,11 +626,27 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
     $("startNote").textContent = ts.size ? `\u5DF2\u6559\u4E3B\u984C ${ts.size} \u500B\uFF08\u4F9D\u79D1\u666E\u6F5B\u80FD\u73ED\u9032\u5EA6\uFF0C${today}\uFF09` : "\u5B78\u671F\u5C1A\u672A\u958B\u59CB\uFF0C\u300C\u8DDF\u9032\u5EA6\u300D\u6703\u81EA\u52D5\u6539\u70BA\u5168\u7BC4\u570D";
   }
   {
-    const sel = $("scope");     // \u300C\u6307\u5B9A\u55AE\u4E00\u4E3B\u984C\u300D\uFF1A\u984C\u5EAB\u88E1\u6709\u7684\u4E3B\u984C\u5404\u4E00\u500B\u9078\u9805
-    [...new Set(bank.map(i => i.topic))].sort().forEach(t => {
-      const o = document.createElement("option"); o.value = t; o.textContent = `\u53EA\u51FA ${t} ${topicText[t] || ""}`.trim(); sel.appendChild(o);
-    });
+    // 「指定單一主題」：只列目前科目有的主題；選了某主題則科目自動跟隨
+    const sel = $("scope"), subj = $("subject"), topicSubject = {};
+    bank.forEach(i => { topicSubject[i.topic] = i.subject; });
+    function fillScope() {
+      const keep = sel.value;
+      [...sel.querySelectorAll("option[data-topic]")].forEach(o => o.remove());
+      [...new Set(bank.filter(i => subj.value === "混合" || i.subject === subj.value).map(i => i.topic))].sort().forEach(t => {
+        const o = document.createElement("option"); o.value = t; o.dataset.topic = "1";
+        o.textContent = `只出 ${t} ${topicText[t] || ""}`.trim(); sel.appendChild(o);
+      });
+      sel.value = [...sel.options].some(o => o.value === keep) ? keep : "taught";
+    }
+    fillScope();
+    subj.addEventListener("change", fillScope);
+    sel.addEventListener("change", () => { const ts = topicSubject[sel.value]; if (ts && subj.value !== ts) { const t = sel.value; subj.value = ts; fillScope(); sel.value = t; } });
   }
+  // 音效：作答區任何按鍵按下都有輕微回饋；靜音鍵
+  document.querySelector(".sides").addEventListener("pointerdown", e => { if (e.target.closest("button")) T.audio.play("tap"); }, true);
+  const muteBtn = $("muteBtn");
+  const drawMute = () => { muteBtn.textContent = T.audio.isMuted() ? "🔇 靜音" : "🔊 聲音"; };
+  drawMute(); muteBtn.addEventListener("click", () => { T.audio.setMuted(!T.audio.isMuted()); drawMute(); });
   on("startBtn", "click", startGame);
   on("exportBtn", "click", () => {
     const rows = R.load(); if (!rows.length) { alert("\u9084\u6C92\u6709\u7D00\u9304\u3002"); return; }
@@ -538,6 +676,7 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
     ["goalR"].forEach(id => { $(id).setAttribute("x1", gr); $(id).setAttribute("x2", gr); });
     drawTeam("teamL", 0); drawTeam("teamR", 1);
     if (r.notes.fallbackAll) callout("\u5168\u7BC4\u570D", null);
+    T.audio.unlock(); T.audio.play("start"); T.audio.startBgm();
     show("game"); updateRope(); nextQuestion();
   }
 
@@ -553,7 +692,8 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
     $("qtext").textContent = q.stem;
     $("why").className = "why"; $("why").textContent = ""; $("nextBtn").className = "next";
     S.resp = [null, null]; S.ms = [null, null]; S.qStart = Date.now();
-    delete $("game").dataset.result;          // 動畫鉤子：每題開始時清除上一題結果
+    delete $("game").dataset.result;
+    T.audio.duck(false);          // 動畫鉤子：每題開始時清除上一題結果
     [0, 1].forEach(side => {
       $("side" + side).classList.remove("done", "locked");
       S.ctrl[side] = mod.render(q, side, $("body" + side), resp => submit(side, resp));
@@ -563,7 +703,7 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
   function submit(side, resp) {
     if (S.resp[side] !== null) return;
     S.resp[side] = resp; S.ms[side] = Date.now() - S.qStart;
-    $("side" + side).classList.add("done");
+    $("side" + side).classList.add("done"); T.audio.play("submit");
     if (S.resp[0] !== null && S.resp[1] !== null) judge();
   }
   function judge() {
@@ -579,6 +719,10 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
     const timedOut = S.resp.some(x => x === null);
     $("game").dataset.result = r.who === null ? (timedOut ? "timeout" : "none") : String(r.who);   // 動畫鉤子：0 紅拉贏、1 藍拉贏、none 都錯、timeout 時間到
     callout(timedOut && !ok[0] && !ok[1] ? "\u6642\u9593\u5230\uFF01" : r.msg, r.who);
+    T.audio.duck(true);
+    if (r.who !== null) { T.audio.play("pull"); setTimeout(() => T.audio.play("correct"), 250); }
+    else if (ok[0] && ok[1]) T.audio.play("correct");
+    else T.audio.play(timedOut ? "timeout" : "wrong");
     $("why").textContent = ((ok[0] && ok[1]) ? "\u2713 " : "\u6B63\u78BA\u7B54\u6848\uFF1A" + answerText(q) + "\u3000") + q.explain; $("why").classList.add("show");
     S.rows.push({ date: T.todayStr(), session_id: S.session, item_id: q.id, subject: q.subject, topic: q.topic, level: q.level, type: q.type,
       red_correct: ok[0] ? 1 : 0, blue_correct: ok[1] ? 1 : 0, red_ms: ms[0] ?? "", blue_ms: ms[1] ?? "", repeat: q.repeat ? 1 : 0 });
@@ -604,7 +748,7 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
     requestAnimationFrame(() => { bar.style.transition = "width 1s linear"; });
     S.timer = setInterval(() => {
       S.tleft--; bar.style.width = (S.tleft / limit * 100) + "%";
-      if (S.tleft <= 5) bar.className = "low";
+      if (S.tleft <= 5) { bar.className = "low"; if (S.tleft > 0) T.audio.play("tick"); }
       if (S.tleft <= 0) { stopTimer(); judge(); }
     }, 1000);
   }
@@ -676,6 +820,7 @@ const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "�
   // ---------- \u7D50\u675F ----------
   function finish() {
     const w = S.pos < 0 ? 0 : S.pos > 0 ? 1 : null;
+    stopTimer(); T.audio.stopBgm(); T.audio.play(w === null ? "both" : "win");
     $("win").className = "screen on " + (w === null ? "draw" : w ? "blue" : "red");
     document.querySelectorAll(".screen").forEach(s => { if (s.id !== "win") s.classList.remove("on"); });
     $("winName").textContent = w === null ? "\u5E73\u624B\uFF01" : S.names[w] + " \u52DD\u5229\uFF01";
