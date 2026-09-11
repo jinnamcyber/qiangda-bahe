@@ -446,7 +446,8 @@ const TUG_SFX = {"aww": "data:audio/mp4;base64,AAAAHGZ0eXBNNEEgAAACAE00QSBpc29ta
       nextBeat += BEAT; beatIdx++;
     }
   }
-  function startBgm() { if (!ensure() || bgmOn) return; bgmOn = true; nextBeat = ctx.currentTime + 0.05; beatIdx = 0; schedule(); bgmTimer = setInterval(schedule, 200); }
+  const BGM_ENABLED = false;   // 2026-09-12：合成旋律暫時關閉，待使用者提供參考後重做
+  function startBgm() { if (!BGM_ENABLED || !ensure() || bgmOn) return; bgmOn = true; nextBeat = ctx.currentTime + 0.05; beatIdx = 0; schedule(); bgmTimer = setInterval(schedule, 200); }
   function stopBgm() { bgmOn = false; clearInterval(bgmTimer); bgmTimer = null; }
   function duck(on) { if (bgmGain) bgmGain.gain.setTargetAtTime(on ? 0.05 : 0.16, now(), 0.1); }
   // 真實人群音效（build 以 base64 內嵌於 TUG_SFX）：解碼後用 BufferSource 播放，同樣經過 master，靜音一起生效
