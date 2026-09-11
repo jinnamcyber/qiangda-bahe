@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>搶答拔河 · 小四數學科學</title>
+<style>
+:root{--sand:#F5D878;--ink:#24332E;--red:#E8413C;--blue:#2457E6;--paper:#FFFCEF;--ok:#287445;--grass:#88B963;--edge:.32vh solid var(--ink);--shadow:0 .45vh 0 var(--ink)}
+*{box-sizing:border-box;margin:0;padding:0;touch-action:manipulation}
+html,body{height:100%}body{font-family:"PingFang TC","Microsoft JhengHei",sans-serif;background:var(--paper);color:var(--ink);overflow:hidden;user-select:none;-webkit-user-select:none}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}button,input,select{outline-offset:.4vh}button:focus-visible,input:focus-visible,select:focus-visible{outline:.45vh solid #936121}button{border:var(--edge);background:var(--paper);min-height:6vh;font-weight:900}button:active:not(:disabled){translate:0 .3vh;box-shadow:0 .1vh 0 var(--ink)}
+.screen{position:absolute;inset:0;display:none;flex-direction:column}.screen.on{display:flex}
+#start{align-items:center;justify-content:center;gap:2vh;text-align:center;padding:3vh 7vw;background:radial-gradient(circle at 8% 20%,#FFFCEF 0 1vh,transparent 1.1vh),radial-gradient(circle at 90% 68%,#FFFCEF 0 1.5vh,transparent 1.6vh),linear-gradient(165deg,#F8E5A9,var(--sand));isolation:isolate;overflow:hidden}
+#start:before,#start:after{content:"";position:absolute;width:28vw;height:28vw;border:var(--edge);border-radius:50%;background:#A4C983;z-index:-1;bottom:-20vw;left:-5vw;box-shadow:0 -1vh 0 #FFFCEF}#start:after{left:auto;right:-5vw;background:#88B963}
+.eyebrow{font-size:1.8vh;font-weight:900;letter-spacing:.35vw;background:var(--ink);color:var(--paper);padding:.65vh 2vw;border-radius:1vh;transform:rotate(-2deg)}
+#start h1{font-size:10vh;line-height:1.1;font-weight:1000;letter-spacing:.4vw;color:var(--paper);-webkit-text-stroke:.55vh var(--ink);paint-order:stroke fill;text-shadow:.3vw .65vh 0 var(--ink);transform:rotate(-2deg)}#start h1 small{font-size:2.1vh;letter-spacing:.3vw;color:var(--ink);-webkit-text-stroke:0;text-shadow:none;margin-top:1.8vh;display:block}
+.start-rule{font-size:2.2vh;font-weight:700}.teams{display:flex;align-items:center;gap:3vw;margin:1vh 0}.team-set{position:relative;padding:1vh 1vw 1.2vh;border:var(--edge);border-radius:2vh;box-shadow:var(--shadow);background:var(--paper);transform:rotate(-2deg)}.team-set.blue{transform:rotate(2deg)}.team-set:before{content:"左邊集合 · 紅隊";display:block;font-size:1.6vh;font-weight:900;text-align:left;margin-bottom:.6vh}.team-set.blue:before{content:"右邊集合 · 藍隊"}.team-set input{width:25vw;height:6.6vh;border:var(--edge);border-radius:1vh;text-align:center;font-size:3.7vh;font-weight:900;color:white;background:var(--red)}.team-set.blue input{background:var(--blue)}.vs{font-size:3.3vh;font-weight:1000;border:var(--edge);border-radius:50%;background:var(--paper);padding:1.8vh 1vw;transform:rotate(-9deg);box-shadow:var(--shadow)}
+.opts{width:84vw;display:grid;grid-template-columns:repeat(6,1fr);gap:1.2vh 1vw;text-align:left}.opts label{grid-column:span 2;border:var(--edge);border-radius:1.5vh;background:var(--paper);padding:.8vh 1.2vw;box-shadow:0 .35vh 0 #B19A56;font-size:1.7vh;font-weight:900;min-width:0}.opts label:nth-child(n+4){grid-column:span 3}.opts select{display:block;width:100%;max-width:100%;height:6vh;padding:0 2vw 0 0;font-size:2.15vh;font-weight:800;border:0;appearance:none;background:linear-gradient(45deg,transparent 50%,var(--ink) 50%) calc(100% - .7vw) 50%/.65vw .65vw no-repeat,linear-gradient(135deg,var(--ink) 50%,transparent 50%) calc(100% - .05vw) 50%/.65vw .65vw no-repeat}
+.big{font-size:3.5vh;padding:1.1vh 5vw;border-radius:2vh;background:var(--ink);color:var(--paper);box-shadow:0 .55vh 0 #728264;min-height:7vh}.big:after{content:" ↗";color:var(--sand)}.note{font-size:1.7vh;font-weight:700;min-height:2vh}.tiny{font-size:1.7vh;background:transparent;border:0;text-decoration:underline;padding:0 1vw;min-height:6vh}.start-admin{display:flex;align-items:center;justify-content:center;flex-wrap:wrap}.start-admin .note{font-size:1.6vh}
+.arena{flex:0 0 28vh;position:relative;overflow:hidden;background:#BDE1E0;border-bottom:var(--edge)}.arena>svg{position:absolute;inset:0;width:100%;height:100%}.score{position:absolute;top:1.2vh;border:var(--edge);border-radius:1.4vh;background:var(--red);color:white;font-size:2.5vh;font-weight:900;padding:.65vh 1.5vw;box-shadow:var(--shadow);max-width:34vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.score.l{left:2vw;rotate:-2deg}.score.r{right:2vw;background:var(--blue);rotate:2deg}.score:before{content:"⚑ ";color:var(--sand)}
+.callout{position:absolute;left:50%;top:50%;max-width:84vw;width:max-content;transform:translate(-50%,-50%) scale(0) rotate(-5deg);font-size:5.3vh;font-weight:1000;line-height:1.2;padding:1.4vh 2.3vw;background:var(--paper);border:.5vh solid var(--ink);border-radius:2vh;box-shadow:.5vw .8vh 0 var(--ink);text-align:center;pointer-events:none;transition:transform .25s cubic-bezier(.2,1.5,.5,1)}.callout.show{transform:translate(-50%,-50%) scale(1) rotate(-5deg)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:1.1vh 2vw 1vh;gap:1vh;background:var(--paper)}.meta{display:flex;align-items:center;justify-content:space-between;gap:1vw;font-size:1.8vh;font-weight:900;min-height:3.3vh}.meta>div:first-child{display:flex;gap:.65vw}.tag{display:inline-block;white-space:nowrap;padding:.4vh .85vw;border: .23vh solid var(--ink);border-radius:.8vh;background:#F5E4AC}#domTag{background:#DCEBD0}#typeTag{background:var(--ink);color:var(--paper)}.timer{position:relative;width:14vw;flex-shrink:0;height:2.6vh;background:#E6DDC6;border:var(--edge);border-radius:2vh;overflow:hidden}.timer i{display:block;width:100%;height:100%;background:#6DAB59;transition:width 1s linear}.timer:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 2.4vw,#FFFCEF 2.4vw 2.55vw)}.timer i.low{background:var(--red);animation:urgent .55s steps(2) infinite}
+.q{font-size:3.05vh;line-height:1.35;font-weight:900;padding:1.15vh 1.5vw 1.15vh 2.1vw;border:var(--edge);border-radius:1.4vh;background:white;box-shadow:0 .4vh 0 #D7CEB7;white-space:pre-line;max-height:12vh;min-height:6.6vh;overflow:auto;border-left:1vw solid var(--sand);flex-shrink:0}
+.sides{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2vw;flex:1;min-height:0}.side{--team:var(--red);display:flex;flex-direction:column;gap:.7vh;min-height:0;padding:.8vh .8vw;border:var(--edge);border-radius:1.6vh;background:#FAE5DB;position:relative}.side.s1{--team:var(--blue);background:#E2EAF8}.head{display:flex;align-items:center;justify-content:space-between;gap:1vw;min-height:3.3vh;font-size:2vh;font-weight:900;color:var(--team);padding:0 .3vw}.head:after{content:"準備作答";font-size:1.5vh;border:.2vh solid currentColor;border-radius:1vh;padding:.2vh .7vw}.side.done .head:after{content:"✓ 已交卷";background:var(--team);color:white;border-color:var(--team)}.side.done{border-color:var(--team)}.side.locked button{pointer-events:none}.body{flex:1;min-height:0;overflow:auto;padding:.2vh .15vw .6vh;scrollbar-width:thin}.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.1vh .8vw}.col{display:flex;flex-direction:column;gap:.7vh}.opt{position:relative;display:flex;align-items:center;gap:.8vw;min-height:6vh;flex-shrink:0;padding:.65vh .9vw;border-radius:1.2vh;background:var(--paper);box-shadow:0 .35vh 0 var(--ink);font-size:2.8vh;text-align:left;line-height:1.2;transition:background .15s,transform .15s;overflow-wrap:anywhere}.opt b{display:grid;place-items:center;width:3.7vh;height:3.7vh;flex-shrink:0;background:var(--team);color:white;font-size:2.1vh;border-radius:.8vh;border:.2vh solid var(--ink)}.opt span{flex:1}.grid2 .opt{font-size:3.1vh}.grid2 .opt b{align-self:flex-start}.opt.picked{background:var(--sand);box-shadow:0 .15vh 0 var(--ink);transform:translateY(.2vh)}.opt.picked:after{content:"●";font-size:2vh}.opt.right,.np-display.right{background:#D8EDBC;border-color:var(--ok);box-shadow:0 .35vh 0 var(--ok)}.opt.right:after{content:"✓";color:var(--ok);font-size:3vh}.opt.wrong,.np-display.wrong{background:#F8C9BE;border-color:#A42A26;box-shadow:0 .35vh 0 #A42A26}.opt.wrong:after{content:"×";color:#A42A26;font-size:3vh}.opt.dim{background:#EAE7DE;color:#777B73;border-color:#A2A79C;box-shadow:0 .25vh 0 #A2A79C}.opt.dim b{background:#777B73}.confirm{border-radius:1.2vh;min-height:6vh;padding:.5vh 3vw;font-size:2.6vh;background:var(--team);color:white;box-shadow:0 .35vh 0 var(--ink);flex-shrink:0;width:100%;margin-top:auto}.confirm:disabled{background:#D0D2C9;color:#646B61;border-color:#889080;box-shadow:0 .25vh 0 #889080}.np-display{font-size:3.2vh;line-height:1.1;min-height:6vh;border:var(--edge);border-radius:1vh;background:#FFFCEF;box-shadow:inset 0 .4vh 0 #E1DBC5;text-align:right;padding:.9vh 1vw;font-weight:900;font-variant-numeric:tabular-nums;flex-shrink:0}.np-display small{font-size:2vh;margin-left:1vw}.np-keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.65vh .7vw;flex-shrink:0}.np-keys button{min-height:6vh;border-radius:1vh;background:#FFFCEF;box-shadow:0 .3vh 0 var(--ink);font-size:2.9vh}.np-keys button:nth-child(4n){background:#F1DDA4}.ord{display:flex;flex-direction:column;gap:.8vh}.ord .opt:before{content:"⠿";color:#788172;font-size:2.5vh}.ord .opt.sel{background:var(--sand);outline:.3vh dashed var(--ink);outline-offset:-.8vh}.ord .opt{padding-right:1.5vw}.body.col:has(.ord):before{content:"點選兩張卡片，交換位置";font-size:1.7vh;font-weight:700;flex-shrink:0}.body.col>div:last-child:not(.np-keys):not(.np-display):not(.ord){flex-shrink:0}
+.foot{display:flex;gap:1vw;align-items:center;min-height:6vh;padding-right:8vw;flex-shrink:0}.why{opacity:0;flex:1;font-size:2vh;font-weight:700;line-height:1.3;max-height:6vh;overflow:auto}.why.show{opacity:1}.next{visibility:hidden;min-height:6vh;flex-shrink:0;border-radius:1.2vh;background:var(--ink);color:var(--paper);padding:.6vh 2vw;font-size:2.5vh;box-shadow:0 .3vh 0 #71816A}.next.show{visibility:visible}.fs{position:absolute;right:2vw;bottom:1vh;font-size:1.7vh;border-radius:1vh;padding:.5vh .8vw;min-height:6vh;background:#EEE9DB}
+#win{align-items:center;justify-content:center;text-align:center;gap:2vh;padding:3vh;isolation:isolate;overflow:hidden;color:var(--paper)}#win.red{background:#C93631}#win.blue{background:#204BC3}#win.draw{background:#38584B}#win:before{content:"";position:absolute;inset:-40vh -30vw;background:repeating-conic-gradient(from 0deg,transparent 0deg 20deg,#FFFCEF0D 20deg 40deg);z-index:-1;animation:sunburst 80s linear infinite}#win:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(110deg,transparent 0 7vw,#F5D878 7vw 8vw,transparent 8vw 13vw,#FFFCEF 13vw 13.5vw,transparent 13.5vw 20vw) top/100% 2vh no-repeat;animation:ribbons 2s ease-in-out infinite alternate}#win h2{font-size:7.5vh;line-height:1.15;max-width:88vw;-webkit-text-stroke:.5vh var(--ink);paint-order:stroke fill;text-shadow:0 .65vh 0 var(--ink)}#win p{font-size:2.8vh;font-weight:800}#win .miss{font-size:2.2vh;line-height:1.5;max-width:80vw;max-height:15vh;overflow:auto;background:var(--paper);color:var(--ink);border:var(--edge);border-radius:1.6vh;padding:1.2vh 2vw;box-shadow:var(--shadow)}#win .big{background:var(--sand);color:var(--ink)}#win .big:after{color:var(--ink)}.trophy{width:17vw;height:22vh;overflow:visible;filter:drop-shadow(0 .6vh 0 #24332E);animation:trophy 2.4s ease-in-out infinite}.victory-kids{position:absolute;bottom:2vh;width:20vw;height:25vh;overflow:visible;z-index:-1}.victory-kids.red-kids{left:1vw}.victory-kids.blue-kids{right:1vw}#win.red .red-kids,#win.blue .blue-kids{animation:cheer .7s ease-in-out infinite alternate}#win.red .blue-kids,#win.blue .red-kids{transform:translateY(7vh) rotate(12deg);opacity:.8}
+.kid-motion{transform-box:fill-box;transform-origin:60% 100%;animation:ready 2.4s ease-in-out infinite}.kid-1 .kid-motion{animation-delay:-.6s}.kid-2 .kid-motion{animation-delay:-1.2s}.kid-3 .kid-motion{animation-delay:-1.8s}.dust{opacity:0}#game[data-result="0"] #teamL .kid-motion,#game[data-result="1"] #teamR .kid-motion{animation:heave .7s ease-in-out 2}#game[data-result="1"] #teamL .kid-motion,#game[data-result="0"] #teamR .kid-motion{animation:stumble .65s ease-in-out 2}#game[data-result="none"] .rope-texture,#game[data-result="timeout"] .rope-texture{animation:shake .16s ease-in-out 6}#game[data-result="none"] .dust,#game[data-result="timeout"] .dust{animation:dust 1.2s ease-out}#game[data-result="0"] .score.l,#game[data-result="1"] .score.r{animation:cheer .35s ease-in-out 4}
+@keyframes ready{50%{transform:rotate(-1deg)}}@keyframes heave{40%{transform:rotate(-9deg)}75%{transform:rotate(-4deg)}}@keyframes stumble{35%{transform:rotate(9deg)}65%{transform:rotate(-3deg)}}@keyframes shake{50%{transform:translateY(.4vh)}}@keyframes dust{20%{opacity:.8}100%{opacity:0;transform:translateY(-1vh)}}@keyframes urgent{50%{filter:brightness(1.5)}}@keyframes cheer{to{translate:0 -1.5vh;rotate:-3deg}}@keyframes trophy{50%{transform:rotate(4deg)}}@keyframes sunburst{to{transform:rotate(360deg)}}@keyframes ribbons{to{transform:translateY(1vh)}}
+.seated{display:none}#win.red .blue-kids .standing,#win.blue .red-kids .standing{display:none}#win.red .blue-kids .seated,#win.blue .red-kids .seated{display:inline}#win.red .blue-kids,#win.blue .red-kids{transform:none;opacity:1}
+@media(max-aspect-ratio:3/2){.arena{flex-basis:24vh}.panel{gap:.8vh}.meta{font-size:1.55vh;gap:.5vw}.tag{padding:.4vh .6vw}.timer{width:12vw}.q{font-size:2.8vh}.opts{width:90vw}.opts select{font-size:2vh}.team-set input{width:29vw}.grid2 .opt{font-size:2.7vh}.score{font-size:2.2vh}.victory-kids{width:17vw}.start-admin .note{flex-basis:100%}#start{gap:1.5vh}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<section id="start" class="screen on">
+  <div class="eyebrow">午休運動會 · 一起動腦，一起出力</div><h1>搶答拔河<small>小四數學 × 科學挑戰</small></h1><p class="start-rule">兩隊同時作答 · 答對向自己拉 · 繩結過線就獲勝</p>
+  <div class="teams">
+    <div class="team-set red"><input aria-label="紅隊名稱" id="nameL" value="紅隊" maxlength="8"></div>
+    <div class="vs">VS</div>
+    <div class="team-set blue"><input aria-label="藍隊名稱" id="nameR" value="藍隊" maxlength="8"></div>
+  </div>
+  <div class="opts">
+    <label>科目<select id="subject"><option value="混合" selected>數學＋科學</option><option value="數學">數學</option><option value="科學">科學</option></select></label>
+    <label>拉過幾格獲勝<select id="winAt"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>8</option></select></label>
+    <label>題數<select id="nq"><option>6</option><option>8</option><option selected>10</option><option>12</option><option>15</option></select></label>
+    <label>時限<select id="tlimit"><option value="1" selected>預設（選擇 30 秒、輸入排序 45 秒）</option><option value="0">不限時</option><option value="0.67">短（20／30 秒）</option><option value="1.5">長（45／68 秒）</option></select></label>
+    <label>範圍<select id="scope"><option value="taught" selected>跟進度（七成已教、三成全範圍）</option><option value="all">全範圍</option></select></label>
+  </div>
+  <button class="big" id="startBtn">開始拔河</button>
+  <div class="note" id="startNote"></div>
+  <div class="start-admin">
+    <span class="note" id="bankinfo"></span>
+    &nbsp;·&nbsp;<button class="tiny" id="exportBtn">匯出紀錄 CSV</button>
+    &nbsp;·&nbsp;<button class="tiny" id="clearBtn">清除紀錄</button>
+  </div>
+</section>
+
+<section id="game" class="screen">
+  <div class="arena">
+    <svg viewBox="0 0 1600 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <pattern id="ropeTwist" width="24" height="18" patternUnits="userSpaceOnUse"><rect width="24" height="18" fill="#F5D878"/><path d="M-8 18L4 0M4 18L16 0M16 18L28 0" stroke="#98703F" stroke-width="5"/></pattern>
+        <pattern id="crowd" width="84" height="42" patternUnits="userSpaceOnUse"><path d="M8 40v-8q9-12 18 0v8" fill="#E8413C"/><circle cx="17" cy="19" r="8" fill="#24332E"/><path d="M49 40v-8q9-12 18 0v8" fill="#2457E6"/><circle cx="58" cy="19" r="8" fill="#98703F"/></pattern>
+      </defs>
+      <rect width="1600" height="320" fill="#BDE1E0"/>
+      <g stroke="#24332E" stroke-width="5" stroke-linejoin="round">
+      <circle cx="1290" cy="54" r="32" fill="#F5D878"/>
+      <path d="M190 65q-12-27 14-31 9-37 40-17 31-7 32 25 25 0 20 23Z M970 49q-7-24 18-25 10-30 35-12 30-5 29 22 22 0 18 15Z" fill="#FFFCEF"/>
+      <path d="M0 165Q150 34 330 150Q460 60 620 157Q800 62 990 153Q1180 57 1370 150Q1500 90 1600 154V230H0Z" fill="#9DBE94"/>
+      <path d="M260 153v-40h1080v40" fill="#F5D878"/><path d="M285 112v-35h1030v35" fill="#FFFCEF"/>
+      <path d="M290 111V79h1018v32" fill="url(#crowd)" stroke="none"/>
+      <path d="M80 64Q800 137 1520 64" fill="none"/>
+      <path d="M180 74l36 3-22 28Z M470 96l36 2-20 29Z M1070 96l36-2-16 29Z M1360 77l36-3-14 30Z" fill="#E8413C"/>
+      <path d="M325 87l36 3-22 27Z M615 103l36 1-20 28Z M925 103l36-1-16 30Z M1215 87l36-3-14 30Z" fill="#2457E6"/>
+      <path d="M0 162H1600V320H0Z" fill="#88B963"/>
+      <path d="M0 227Q800 210 1600 227V304H0Z" fill="#DEAE73"/>
+      </g>
+      <path d="M0 243Q800 226 1600 243M0 294H1600" fill="none" stroke="#FFFCEF" stroke-width="5"/>
+      <path d="M280 243h250v48H280Z" fill="#E8413C" opacity=".25"/><path d="M1070 243h250v48h-250Z" fill="#2457E6" opacity=".25"/>
+      <path d="M110 309l-6-10m6 10 9-9M680 313l-6-10m6 10 9-9M1450 313l-6-10m6 10 9-9" stroke="#426544" stroke-width="4" fill="none"/>
+      <line id="goalL" x1="500" y1="221" x2="500" y2="313" stroke="#B72E2A" stroke-width="10" stroke-dasharray="14 8"/>
+      <line id="goalR" x1="1100" y1="221" x2="1100" y2="313" stroke="#183FA8" stroke-width="10" stroke-dasharray="14 8"/>
+      <path d="M800 255v60" stroke="#FFFCEF" stroke-width="7"/>
+      <g stroke="#24332E" stroke-width="5" stroke-linejoin="round"><path d="M800 293v-60h44l-12 13 12 13h-44" fill="#F5D878"/><ellipse cx="800" cy="298" rx="12" ry="4" fill="#24332E"/></g>
+      <g id="teamL"></g><g id="teamR"></g>
+      <g id="ropeG">
+        <g class="rope-texture"><line x1="60" y1="213" x2="1540" y2="213" stroke="#24332E" opacity=".18" stroke-width="18" stroke-linecap="round"/><line x1="60" y1="205" x2="1540" y2="205" stroke="#24332E" stroke-width="16" stroke-linecap="round"/><rect x="60" y="199" width="1480" height="12" rx="6" fill="url(#ropeTwist)"/></g>
+        <g id="knot"><path d="M0 179v23" stroke="#24332E" stroke-width="6"/><rect x="-57" y="117" width="114" height="61" rx="14" fill="#F5D878" stroke="#24332E" stroke-width="6"/><text id="knotTxt" x="0" y="160" text-anchor="middle" font-size="38" font-weight="900" fill="#24332E">0</text><circle cx="0" cy="205" r="16" fill="#FFFCEF" stroke="#24332E" stroke-width="5"/><path d="M-8 196l16 18m-14-20 16 18" stroke="#98703F" stroke-width="4"/></g>
+      </g>
+    </svg>
+    <div class="score l" id="scoreL">紅隊</div>
+    <div class="score r" id="scoreR">藍隊</div>
+    <div class="callout" id="callout"></div>
+  </div>
+  <div class="panel">
+    <div class="meta">
+      <div><span class="tag" id="qno"></span> <span class="tag" id="domTag"></span> <span class="tag" id="pullTag"></span></div>
+      <div class="timer" id="timerBox"><i id="timerBar"></i></div>
+      <span class="tag" id="typeTag"></span>
+    </div>
+    <div class="q" id="qtext"></div>
+    <div class="sides">
+      <div class="side s0" id="side0"><div class="head" id="head0"></div><div class="body" id="body0"></div></div>
+      <div class="side s1" id="side1"><div class="head" id="head1"></div><div class="body" id="body1"></div></div>
+    </div>
+    <div class="foot">
+      <div class="why" id="why"></div>
+      <button class="next" id="nextBtn">下一題 ▶</button>
+    </div>
+  </div>
+  <button class="fs" id="fsBtn">全螢幕</button>
+</section>
+
+<section id="win" class="screen">
+<svg class="trophy" viewBox="0 0 200 200" aria-hidden="true"><g stroke="#24332E" stroke-width="6" stroke-linejoin="round"><path d="M54 42H22v26q0 37 48 39M146 42h32v26q0 37-48 39" fill="none" stroke="#F5D878" stroke-width="14"/><path d="M52 25h96v55q0 39-48 47-48-8-48-47Z" fill="#F5D878"/><path d="M125 28v48q0 32-25 47 48-7 48-43V28" fill="#D5A34F" stroke="none"/><path d="M100 127v30m-33 19v-19h66v19" fill="#F5D878"/><rect x="49" y="177" width="102" height="17" rx="5" fill="#FFFCEF"/><path d="M100 46l9 19 21 3-15 15 3 21-18-10-18 10 3-21-15-15 21-3Z" fill="#FFFCEF"/></g></svg><svg class="victory-kids red-kids" viewBox="0 0 200 230" aria-hidden="true"><g class="standing" stroke="#24332E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M70 152l-12 47m61-47 22 47" stroke="#B9825D" stroke-width="19"/><path d="M48 201h22m59 0h25" stroke="#FFFCEF" stroke-width="17"/><path d="M63 112L30 80 18 44m111 68 31-32 18-36" fill="none" stroke="#E5B388" stroke-width="17"/><path d="M62 96q38-17 66 0l8 65H55Z" fill="#E8413C"/><circle cx="96" cy="60" r="36" fill="#E5B388"/><path d="M60 53q-2-48 42-34 34-3 31 31l-23-14-15 13-17-8Z" fill="#24332E"/><path d="M78 59l8-3m22 0 8 3M85 74q12 15 23 0" fill="none"/><path d="M85 116h22v22H85Z" fill="#FFFCEF"/></g><g class="seated" stroke="#24332E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="103" cy="214" rx="69" ry="9" fill="#24332E" opacity=".25" stroke="none"/><path d="M88 179l-34 27-24-2m79-25 27 26 29 2" fill="none" stroke="#E5B388" stroke-width="18"/><path d="M24 207h23m112 4h22" stroke="#FFFCEF" stroke-width="16"/><path d="M72 135q22-13 47 0l15 48H63Z" fill="#E8413C"/><path d="M73 149l-20 25 1 28m67-54 19 29-1 22" fill="none" stroke="#E5B388" stroke-width="14"/><circle cx="96" cy="104" r="33" fill="#E5B388"/><path d="M64 97q-5-41 35-32 28-4 30 29l-19-10-16 13-12-11Z" fill="#24332E"/><path d="M77 110l9 3m20 0 9-3m-25 15h13" fill="none"/><path d="M142 104q13 15 1 18-12-3-1-18" fill="#BDE1E0" stroke-width="3"/></g></svg><svg class="victory-kids blue-kids" viewBox="0 0 200 230" aria-hidden="true"><g class="standing" stroke="#24332E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M70 152l-12 47m61-47 22 47" stroke="#B9825D" stroke-width="19"/><path d="M48 201h22m59 0h25" stroke="#FFFCEF" stroke-width="17"/><path d="M63 112L30 80 18 44m111 68 31-32 18-36" fill="none" stroke="#E5B388" stroke-width="17"/><path d="M62 96q38-17 66 0l8 65H55Z" fill="#2457E6"/><circle cx="96" cy="60" r="36" fill="#E5B388"/><path d="M60 53q-2-48 42-34 34-3 31 31l-23-14-15 13-17-8Z" fill="#24332E"/><path d="M78 59l8-3m22 0 8 3M85 74q12 15 23 0" fill="none"/><path d="M85 116h22v22H85Z" fill="#FFFCEF"/></g><g class="seated" stroke="#24332E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="103" cy="214" rx="69" ry="9" fill="#24332E" opacity=".25" stroke="none"/><path d="M88 179l-34 27-24-2m79-25 27 26 29 2" fill="none" stroke="#E5B388" stroke-width="18"/><path d="M24 207h23m112 4h22" stroke="#FFFCEF" stroke-width="16"/><path d="M72 135q22-13 47 0l15 48H63Z" fill="#2457E6"/><path d="M73 149l-20 25 1 28m67-54 19 29-1 22" fill="none" stroke="#E5B388" stroke-width="14"/><circle cx="96" cy="104" r="33" fill="#E5B388"/><path d="M64 97q-5-41 35-32 28-4 30 29l-19-10-16 13-12-11Z" fill="#24332E"/><path d="M77 110l9 3m20 0 9-3m-25 15h13" fill="none"/><path d="M142 104q13 15 1 18-12-3-1-18" fill="#BDE1E0" stroke-width="3"/></g></svg>
+  <h2 id="winName"></h2>
+  <p id="winLine"></p>
+  <p id="winStats" style="font-size:2.6vh;opacity:.9"></p>
+  <div class="miss" id="winMiss"></div>
+  <button class="big" id="againBtn">再來一局</button>
+</section>
+
+<script>
+const TUG_BANK = [{"id": "G-M-2026-09-001", "subject": "數學", "topic": "數01", "level": "推理", "type": "order", "stem": "把這四個數由小到大排好：", "options": ["5 078", "5 780", "5 087", "5 708"], "answer": [0, 2, 3, 1], "explain": "千位都是 5，先比百位：0 比 7 小；再比十位。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-002", "subject": "數學", "topic": "數03", "level": "應用", "type": "numpad", "stem": "一箱橙有 24 個。學校買了 18 箱，開學禮發給學生後剩下 37 個。一共發出了多少個？", "answer": 395, "unit": "個", "explain": "24 × 18 = 432，432 − 37 = 395。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-003", "subject": "數學", "topic": "數05", "level": "推理", "type": "multi", "stem": "下面哪些數既是 3 的倍數，又是 4 的倍數？", "options": ["18", "24", "30", "36", "44"], "answer": [1, 3], "explain": "要同時是 3 和 4 的倍數，就是 12 的倍數：24 和 36。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-004", "subject": "數學", "topic": "數09", "level": "知道", "type": "mcq", "stem": "哪個分數比 1/2 大？", "options": ["2/5", "3/8", "4/7", "5/12"], "answer": 2, "explain": "4/7 中，分子 4 比分母的一半 3.5 大，所以超過一半。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-005", "subject": "數學", "topic": "數01", "level": "知道", "type": "mcq", "stem": "「四千零九」用數字寫是哪一個？", "options": ["4 009", "4 090", "4 900", "40 009"], "answer": 0, "explain": "千位是 4，百位和十位都沒有，中間要補兩個 0。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-006", "subject": "數學", "topic": "數01", "level": "應用", "type": "mcq", "stem": "四個場館的人數：甲 2 405、乙 2 450、丙 2 045、丁 2 504。\n人數第二多的是哪個場館？", "options": ["甲", "乙", "丙", "丁"], "answer": 1, "explain": "四個數的千位都是 2，要逐位往下比才分得出先後。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-007", "subject": "數學", "topic": "數01", "level": "應用", "type": "numpad", "stem": "把 4 736 的百位數字 7 改成 2，這個數減少了多少？", "answer": 500, "explain": "百位少了 5，即少了 5 個一百。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-008", "subject": "數學", "topic": "數02", "level": "應用", "type": "mcq", "stem": "球賽首天售出 1 860 張門票，次天比首天少 245 張。\n兩天共售出多少張？", "options": ["1 615", "2 105", "3 475", "3 720"], "answer": 2, "explain": "「少 245 張」要先求出次天的張數，再把兩天相加。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-009", "subject": "數學", "topic": "數02", "level": "推理", "type": "multi", "stem": "下面哪些算式的答案大於 5 000？", "options": ["2 480＋2 530", "4 900＋150", "6 200－1 300", "3 000＋1 900", "5 600－400"], "answer": [0, 1, 4], "explain": "把數湊成整千來估：只有這三題超過 5 000，不必準確計算。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-010", "subject": "數學", "topic": "數03", "level": "知道", "type": "mcq", "stem": "計算 32 × 24。", "options": ["128", "192", "608", "768"], "answer": 3, "explain": "32 × 20 ＝ 640，32 × 4 ＝ 128，兩個部分積要相加。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-011", "subject": "數學", "topic": "數03", "level": "應用", "type": "mcq", "stem": "一幅牆每行貼 14 塊瓷磚，貼了 25 行。\n牆上共有多少塊瓷磚？", "options": ["39", "280", "350", "364"], "answer": 2, "explain": "整齊排成行列的東西，用每行的數目乘行數。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-012", "subject": "數學", "topic": "數03", "level": "推理", "type": "multi", "stem": "下面哪些算式的積和 24 × 16 相等？", "options": ["12×32", "48×8", "6×64", "16×25", "24×8＋24×8"], "answer": [0, 1, 2, 4], "explain": "一邊加倍、另一邊減半，積不變；拆成兩份再相加也不變。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-013", "subject": "數學", "topic": "數04", "level": "知道", "type": "mcq", "stem": "計算 728 ÷ 7。", "options": ["14", "104", "107", "140"], "answer": 1, "explain": "十位的 2 不夠 7 除，商的十位要寫 0，不可以留空。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-014", "subject": "數學", "topic": "數04", "level": "應用", "type": "numpad", "stem": "有 227 顆珠子，每 6 顆串成一條手鏈。\n串完後餘下多少顆？", "answer": 5, "unit": "顆", "explain": "6 × 37 ＝ 222，剩下的不夠再串一條。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-015", "subject": "數學", "topic": "數04", "level": "應用", "type": "mcq", "stem": "餐廳有 174 隻雞蛋，用去 54 隻，其餘每 6 隻裝一盒。\n可裝滿多少盒？", "options": ["9", "20", "24", "29"], "answer": 1, "explain": "要先減去用去的，才可以用剩下的去除。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-016", "subject": "數學", "topic": "數04", "level": "推理", "type": "order", "stem": "把下面各題的商由小到大排好：", "options": ["720 ÷ 5", "720 ÷ 8", "720 ÷ 4", "720 ÷ 6"], "answer": [1, 3, 0, 2], "explain": "被除數相同，分的份數越多，每份就越少。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-017", "subject": "數學", "topic": "數05", "level": "應用", "type": "multi", "stem": "下面哪些數是 40 的因數？", "options": ["3", "5", "8", "12", "20"], "answer": [1, 2, 4], "explain": "因數要能把 40 整除，除下來沒有餘數。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-018", "subject": "數學", "topic": "數05", "level": "推理", "type": "mcq", "stem": "任意兩個奇數相加，和一定是甚麼數？", "options": ["奇數", "偶數", "有時奇有時偶", "5 的倍數"], "answer": 1, "explain": "每個奇數都比偶數多 1，兩個多出來的 1 剛好合成一對。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-019", "subject": "數學", "topic": "數06", "level": "知道", "type": "mcq", "stem": "3 962 取近似值至百位是多少？", "options": ["3 900", "3 960", "4 000", "4 900"], "answer": 2, "explain": "取至百位就看十位：6 夠 5 要進位，後面寫 0。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-020", "subject": "數學", "topic": "數06", "level": "應用", "type": "numpad", "stem": "劇院有 38 行座位，每行 52 個。\n估計全院約有多少個座位？", "answer": 2000, "unit": "個", "tolerance": 150, "explain": "把 38 看成 40、52 看成 50，估算只求接近，不求準確。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-021", "subject": "數學", "topic": "數07", "level": "應用", "type": "numpad", "stem": "□ × 7 ＋ 15 ＝ 71，□ 是多少？", "answer": 8, "explain": "倒着做：先減去後加的 15，再除以 7。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-022", "subject": "數學", "topic": "數07", "level": "推理", "type": "mcq", "stem": "24 □ 6 □ 3 ＝ 7\n兩個 □ 依次應填甚麼符號？", "options": ["÷ ＋", "× －", "－ ÷", "÷ ×"], "answer": 0, "explain": "24 ÷ 6 ＝ 4，離 7 還差 3，所以第二個要填加號。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-023", "subject": "數學", "topic": "數08", "level": "應用", "type": "order", "stem": "這個數列每次減 12，把四個數排回原來次序：", "options": ["31", "67", "43", "55"], "answer": [1, 3, 2, 0], "explain": "每次減 12，所以最大的排最前，之後逐個減 12。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-024", "subject": "數學", "topic": "數08", "level": "推理", "type": "order", "stem": "下面四個數列的第 5 個數，由小到大排：", "options": ["2、4、6、8、…", "1、3、9、27、…", "6、12、18、24、…", "5、10、15、20、…"], "answer": [0, 3, 2, 1], "explain": "先找出每列的規律，再數到第 5 個：10、81、30、25。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-025", "subject": "數學", "topic": "數08", "level": "推理", "type": "numpad", "stem": "數列：3、7、15、31、□。\n□ 是多少？", "answer": 63, "explain": "相鄰兩數的差是 4、8、16，每次加倍，下一次要加 32。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-026", "subject": "數學", "topic": "數09", "level": "推理", "type": "order", "stem": "把這四個分數由大到小排好：", "options": ["1/3", "3/4", "1/2", "5/6"], "answer": [3, 1, 2, 0], "explain": "全部化成十二分之幾：10/12、9/12、6/12、4/12。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-027", "subject": "數學", "topic": "數10", "level": "知道", "type": "mcq", "stem": "計算 5/9 － 2/9。", "options": ["2/9", "3/9", "3/18", "7/9"], "answer": 1, "explain": "分母 9 是「分成 9 份」，份數不變，只減分子。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-028", "subject": "數學", "topic": "數10", "level": "應用", "type": "numpad", "stem": "一個蛋糕平均分成 12 份。哥哥吃了 3/12，妹妹吃了 5/12。\n還剩多少份？", "answer": 4, "unit": "份", "explain": "3/12 和 5/12 合起來是 8 份，用 12 減去。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-029", "subject": "數學", "topic": "數10", "level": "推理", "type": "multi", "stem": "下面哪些算式的答案剛好等於 1？", "options": ["3/5＋2/5", "4/9＋5/9", "2/6＋3/6", "7/10＋3/10", "5/8＋4/8"], "answer": [0, 1, 3], "explain": "分子加起來剛好等於分母，就是一個完整的整體。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-030", "subject": "數學", "topic": "數11", "level": "知道", "type": "mcq", "stem": "0.45 中的 4 表示多少？", "options": ["4 個一", "4 個十分之一", "4 個百分之一", "4 個十"], "answer": 1, "explain": "小數點後第一位是十分位，4 正好站在那一位。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-031", "subject": "數學", "topic": "數11", "level": "應用", "type": "order", "stem": "把這四個小數由大到小排好：", "options": ["0.4", "0.35", "0.5", "0.45"], "answer": [2, 3, 0, 1], "explain": "先比十分位，十分位相同才比百分位，不是看寫得長就大。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-032", "subject": "數學", "topic": "數12", "level": "應用", "type": "order", "stem": "把下面各題的答案由小到大排好：", "options": ["1.5 ＋ 0.25", "2 － 0.4", "0.95 ＋ 0.7", "2.1 － 0.4"], "answer": [1, 2, 3, 0], "explain": "四個答案是 1.75、1.6、1.65、1.7，比較時先看十分位。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-033", "subject": "數學", "topic": "數12", "level": "應用", "type": "mcq", "stem": "一袋米重 2.35 公斤，一袋麵粉比它重 0.4 公斤。\n麵粉重多少公斤？", "options": ["1.95", "2.39", "2.75", "6.35"], "answer": 2, "explain": "「比它重」要用加法，而且 0.4 的 4 要對正十分位。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-034", "subject": "數學", "topic": "數12", "level": "推理", "type": "multi", "stem": "下面哪些算式的答案比 1 大？", "options": ["0.6＋0.5", "0.35＋0.6", "1.2－0.3", "0.9＋0.15", "1.05－0.1"], "answer": [0, 3], "explain": "只有這兩題湊夠一個整體之後還有餘，其餘都不足 1。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-035", "subject": "數學", "topic": "數13", "level": "知道", "type": "mcq", "stem": "一張課室書桌的高度最接近哪一個？", "options": ["75 厘米", "75 毫米", "75 米", "7 厘米"], "answer": 0, "explain": "書桌大約 75 厘米高；75 毫米不夠一個手掌闊，75 米比十層樓還高，7 厘米只及一隻手指。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-036", "subject": "數學", "topic": "數13", "level": "應用", "type": "numpad", "stem": "書架高 1 米 45 厘米，比書桌高 68 厘米。\n書桌高多少厘米？", "answer": 77, "unit": "厘米", "explain": "先把 1 米 45 厘米化成 145 厘米，145 － 68 ＝ 77 厘米。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-037", "subject": "數學", "topic": "數13", "level": "推理", "type": "order", "stem": "把下面四段長度由短到長排好：", "options": ["2 米 40 厘米", "2 100 毫米", "2.5 米", "195 厘米"], "answer": [3, 1, 0, 2], "explain": "全部化成厘米是 240、210、250、195，所以 195 厘米最短、2.5 米最長。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-038", "subject": "數學", "topic": "數14", "level": "應用", "type": "numpad", "stem": "校隊由 3 時 45 分練到 5 時 20 分。\n一共練了多少分鐘？", "answer": 95, "unit": "分鐘", "explain": "3 時 45 分到 5 時 20 分是 1 小時 35 分，60 ＋ 35 ＝ 95 分鐘。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-039", "subject": "數學", "topic": "數14", "level": "應用", "type": "mcq", "stem": "一壺水 2 公升，倒滿 6 杯，每杯 300 毫升。\n壺裏還剩多少毫升？", "options": ["200 毫升", "1 800 毫升", "3 800 毫升", "1 400 毫升"], "answer": 0, "explain": "6 杯共 6 × 300 ＝ 1 800 毫升，2 公升 ＝ 2 000 毫升，2 000 － 1 800 ＝ 200 毫升。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-040", "subject": "數學", "topic": "數14", "level": "推理", "type": "multi", "stem": "下面哪些時間長度超過 1 小時？", "options": ["70 分鐘", "1 時 5 分", "55 分鐘", "60 分鐘", "1 時 40 分"], "answer": [0, 1, 4], "explain": "化成分鐘是 70、65、55、60、100，只有多於 60 分鐘的才算超過，60 分鐘剛好等於 1 小時。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-041", "subject": "數學", "topic": "數15", "level": "應用", "type": "numpad", "stem": "一個正五邊形每邊 8 厘米。用同樣長的鐵線改圍\n一個正方形，正方形邊長是多少厘米？", "answer": 10, "unit": "厘米", "explain": "五邊形周界 8 × 5 ＝ 40 厘米，鐵線一樣長，40 ÷ 4 ＝ 10 厘米。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-042", "subject": "數學", "topic": "數15", "level": "推理", "type": "multi", "stem": "下面哪些圖形的周界剛好是 24 厘米？", "options": ["邊長 6 厘米正方形", "長 8 闊 4 長方形", "邊長 8 厘米正三角形", "長 10 闊 4 長方形", "邊長 5 厘米正方形"], "answer": [0, 1, 2], "explain": "6 × 4、(8 ＋ 4) × 2、8 × 3 都等於 24 厘米，另外兩個是 28 厘米和 20 厘米。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-043", "subject": "數學", "topic": "數16", "level": "知道", "type": "mcq", "stem": "每格 1 平方厘米。圖形蓋住 9 個整格、6 個半格。\n面積是多少？", "options": ["12 平方厘米", "15 平方厘米", "9 平方厘米", "3 平方厘米"], "answer": 0, "explain": "兩個半格合成一個整格，6 個半格等於 3 格，9 ＋ 3 ＝ 12 平方厘米。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-044", "subject": "數學", "topic": "數16", "level": "應用", "type": "numpad", "stem": "用邊長 1 厘米的小正方體砌長方體，底層 6 行\n3 列，砌 3 層。體積是多少立方厘米？", "answer": 54, "unit": "立方厘米", "explain": "一層 6 × 3 ＝ 18 個，3 層共 18 × 3 ＝ 54 個，即 54 立方厘米。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-045", "subject": "數學", "topic": "數16", "level": "推理", "type": "order", "stem": "四個長方體的長闊高如下，把體積由小到大排：", "options": ["2 × 3 × 4", "5 × 2 × 2", "3 × 3 × 3", "1 × 6 × 5"], "answer": [1, 0, 2, 3], "explain": "三個數相乘得 24、20、27、30，所以 5 × 2 × 2 最小、1 × 6 × 5 最大。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-046", "subject": "數學", "topic": "數17", "level": "知道", "type": "mcq", "stem": "兩條直線相交成直角，這兩條直線的關係叫甚麼？", "options": ["互相平行", "互相垂直", "互相重疊", "互相對稱"], "answer": 1, "explain": "相交成直角的兩條直線叫互相垂直，平行線則永遠不會相交。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-047", "subject": "數學", "topic": "數17", "level": "應用", "type": "multi", "stem": "下面哪些大寫字母有一對互相平行的線？", "options": ["E", "L", "N", "T", "V"], "answer": [0, 2], "explain": "E 的三條橫線互相平行，N 的兩條直線互相平行；L 和 T 的兩條線互相垂直，V 的兩條線相交。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-048", "subject": "數學", "topic": "數18", "level": "知道", "type": "mcq", "stem": "把一個平角平均分成 3 份，每份是多少度？", "options": ["30 度", "60 度", "90 度", "120 度"], "answer": 1, "explain": "平角是 180 度，180 ÷ 3 ＝ 60 度。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-049", "subject": "數學", "topic": "數18", "level": "應用", "type": "order", "stem": "把下面四個角由小到大排好：", "options": ["平角的三分之一", "直角", "兩個直角", "直角的一半"], "answer": [3, 0, 1, 2], "explain": "四個角分別是 60 度、90 度、180 度、45 度，所以直角的一半最小、兩個直角最大。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-050", "subject": "數學", "topic": "數19", "level": "應用", "type": "mcq", "stem": "在一個邊長 10 厘米的正方形裏畫一個最大的圓。\n這個圓的半徑是多少厘米？", "options": ["5 厘米", "10 厘米", "20 厘米", "2.5 厘米"], "answer": 0, "explain": "最大的圓的直徑剛好等於正方形的邊長 10 厘米，半徑是 10 ÷ 2 ＝ 5 厘米。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-051", "subject": "數學", "topic": "數19", "level": "推理", "type": "multi", "stem": "下面哪些說法一定正確？", "options": ["正方形是長方形", "長方形是正方形", "正方形有四個直角", "梯形有兩組對邊平行", "四邊形都有四條邊"], "answer": [0, 2, 4], "explain": "正方形符合長方形的全部條件，而長方形的邊不一定全相等，梯形只有一組對邊平行。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-052", "subject": "數學", "topic": "數20", "level": "知道", "type": "mcq", "stem": "一個三角柱體有多少個面？", "options": ["3 個", "4 個", "5 個", "6 個"], "answer": 2, "explain": "三角柱體有上下兩個三角形面，加三個長方形側面，共 5 個面。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-053", "subject": "數學", "topic": "數20", "level": "推理", "type": "multi", "stem": "一個立體的 6 個面全是長方形。\n下面哪些一定正確？", "options": ["它有 12 條邊", "它有 8 個頂點", "它一定是正方體", "它可以滾動", "它有一個曲面"], "answer": [0, 1], "explain": "6 個長方形面的立體是長方體，一定有 12 條邊（棱）和 8 個頂點；它的邊不一定全相等，也沒有曲面可以滾。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-054", "subject": "數學", "topic": "數21", "level": "應用", "type": "mcq", "stem": "四班收集舊電池數：\n甲 36、乙 48、丙 27、丁 45\n乙丁合共比甲丙合共多多少？", "options": ["30 個", "156 個", "21 個", "9 個"], "answer": 0, "explain": "乙丁 48 ＋ 45 ＝ 93，甲丙 36 ＋ 27 ＝ 63，93 － 63 ＝ 30 個。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-055", "subject": "數學", "topic": "數21", "level": "應用", "type": "order", "stem": "兩場比賽得分：\n紅隊 25、38\n藍隊 40、19\n黃隊 31、30\n總分由多到少排：", "options": ["紅隊", "藍隊", "黃隊"], "answer": [0, 2, 1], "explain": "紅隊 63 分、藍隊 59 分、黃隊 61 分，所以紅隊最多、藍隊最少。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-056", "subject": "數學", "topic": "數22", "level": "應用", "type": "numpad", "stem": "運動會報名：\n甲班 男 18、女 22\n乙班 男 25、女 ？\n兩班共 100 人，乙班女生多少人？", "answer": 35, "unit": "人", "explain": "已知三格合計 18 ＋ 22 ＋ 25 ＝ 65，100 － 65 ＝ 35 人。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-057", "subject": "數學", "topic": "數22", "level": "推理", "type": "mcq", "stem": "棒形圖直軸一格代表 5 人。原本 6 格高的棒，\n改成一格代表 2 人後要畫多少格高？", "options": ["15 格", "6 格", "12 格", "30 格"], "answer": 0, "explain": "6 格代表 6 × 5 ＝ 30 人，人數沒有變，30 ÷ 2 ＝ 15 格。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-058", "subject": "數學", "topic": "數23", "level": "應用", "type": "mcq", "stem": "每包種子可種 6 盆。\n甲班買 5 包、乙班買 4 包、丙班買 7 包\n三班一共可種多少盆？", "options": ["96 盆", "16 盆", "42 盆", "30 盆"], "answer": 0, "explain": "三班共 5 ＋ 4 ＋ 7 ＝ 16 包，每包 6 盆，16 × 6 ＝ 96 盆。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-059", "subject": "數學", "topic": "數23", "level": "推理", "type": "multi", "stem": "甲班 20 人、乙班 25 人。\n回收膠樽：甲班 60 個、乙班 70 個。\n哪些結論一定成立？", "options": ["乙班回收得比甲班多", "甲班平均每人 3 個", "乙班平均每人較多", "乙班同學較愛護環境", "兩班共回收 130 個"], "answer": [0, 1, 4], "explain": "70 > 60、60 ÷ 20 ＝ 3、60 ＋ 70 ＝ 130 都由數據直接得出；乙班 25 人若每人 3 個要 75 個，實際只有 70 個，平均反而較少，而愛不愛護環境資料裏並沒有。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-M-2026-09-060", "subject": "數學", "topic": "數23", "level": "推理", "type": "order", "stem": "每盒價錢（元）：甲 12、乙 15、丙 9、丁 20\n買入盒數：甲 3、乙 2、丙 5、丁 1\n付錢由少到多排：", "options": ["甲", "乙", "丙", "丁"], "answer": [3, 1, 0, 2], "explain": "價錢乘盒數得甲 36 元、乙 30 元、丙 45 元、丁 20 元，所以丁最少、丙最多。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-001", "subject": "科學", "topic": "科04", "level": "應用", "type": "order", "stem": "把青蛙一生的階段按先後排好：", "options": ["有腳的蝌蚪", "成蛙", "卵", "沒有腳的蝌蚪"], "answer": [2, 3, 0, 1], "explain": "卵孵出蝌蚪，先長後腿再長前腿，尾巴消失後變成蛙。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-002", "subject": "科學", "topic": "科01", "level": "知道", "type": "mcq", "stem": "下面哪一樣是生物？", "options": ["會走動的玩具狗", "河邊的石頭", "樹上的青苔", "飄動的雲"], "answer": 2, "explain": "青苔會生長和繁殖；玩具狗會動但不會生長。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-003", "subject": "科學", "topic": "科01", "level": "應用", "type": "mcq", "stem": "三樣東西放在窗台三星期後：\n甲長高並長出新葉，乙生了鏽，丙裂成兩半。\n哪一樣是生物？", "options": ["甲", "乙", "丙", "三樣都是"], "answer": 0, "explain": "只有生物會生長、長出新的部分；生鏽和裂開都不是生長。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-004", "subject": "科學", "topic": "科02", "level": "知道", "type": "mcq", "stem": "下面哪一項是所有哺乳類都有的特徵？", "options": ["用奶餵養幼兒", "會在天上飛", "身上有鱗片", "在水中生活"], "answer": 0, "explain": "哺乳類都用奶餵養幼兒；會不會飛、住在哪裏都不是分類的準則。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-005", "subject": "科學", "topic": "科02", "level": "應用", "type": "multi", "stem": "街市裏的五種動物，哪些身體裏沒有背骨？", "options": ["蝦", "鯪魚", "蟹", "雞", "蜆"], "answer": [0, 2, 4], "explain": "蝦、蟹、蜆都沒有背骨，屬無脊椎動物；鯪魚和雞有背骨。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-006", "subject": "科學", "topic": "科02", "level": "推理", "type": "mcq", "stem": "蝸牛和烏龜都背着硬殼，\n為甚麼牠們不是同一類？", "options": ["烏龜有背骨，蝸牛沒有", "烏龜的殼比較大", "蝸牛住在草地上", "烏龜會游泳"], "answer": 0, "explain": "分類看身體特徵，烏龜有背骨、蝸牛沒有，外表相似不代表同類。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-007", "subject": "科學", "topic": "科03", "level": "應用", "type": "order", "stem": "水從泥土進入木棉樹後經過的次序：", "options": ["莖", "葉", "根"], "answer": [2, 0, 1], "explain": "根從泥土吸水，莖把水運上去，最後送到葉。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-008", "subject": "科學", "topic": "科03", "level": "應用", "type": "numpad", "stem": "同樣的小白菜苗，兩星期後量高度：\n陽光下 14 厘米，樹蔭下 6 厘米。\n相差多少厘米？", "answer": 8, "unit": "厘米", "explain": "葉要用陽光製造養分，陽光足夠的一盆長得較高：14 − 6 ＝ 8。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-009", "subject": "科學", "topic": "科03", "level": "推理", "type": "multi", "stem": "一棵小樹的根大部分被蟲咬斷。\n最可能出現哪些情況？", "options": ["吸到的水減少", "葉子變得枯黃", "容易被風吹倒", "花會變成另一種顏色", "葉會變成尖刺"], "answer": [0, 1, 2], "explain": "根負責吸水和固定植物，根壞了會同時影響吸水和支撐，花色和葉形卻不會改變。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-010", "subject": "科學", "topic": "科04", "level": "應用", "type": "numpad", "stem": "蝴蝶各階段的日數：\n卵 4 天、幼蟲 15 天、蛹 9 天。\n由卵到成蟲共要多少天？", "answer": 28, "unit": "天", "explain": "把三個階段的日數加起來：4 ＋ 15 ＋ 9 ＝ 28。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-011", "subject": "科學", "topic": "科04", "level": "推理", "type": "mcq", "stem": "蝗蟲的幼蟲像小蝗蟲，只是沒有翅膀；\n蝴蝶的幼蟲卻是毛蟲。這說明甚麼？", "options": ["有些昆蟲幼體像成體", "蝗蟲不是昆蟲", "毛蟲會長成蝗蟲", "昆蟲都有蛹的階段"], "answer": 0, "explain": "有些昆蟲的幼體和成體相似，不是所有昆蟲都要經過樣子完全不同的階段。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-012", "subject": "科學", "topic": "科05", "level": "應用", "type": "mcq", "stem": "小明的爸爸眼睛深褐色、手臂有一道疤、會說葡語。\n小明出生時可能有哪一樣？", "options": ["深褐色的眼睛", "手臂的疤", "說葡語的能力", "三樣都有"], "answer": 0, "explain": "眼睛的顏色由父母遺傳；疤痕和語言都是出生後才有的。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-013", "subject": "科學", "topic": "科05", "level": "推理", "type": "multi", "stem": "下面哪些特徵，父母有可能遺傳給子女？", "options": ["天生的頭髮顏色", "雙眼皮", "曬黑的皮膚", "學會的普通話", "眼睛的顏色"], "answer": [0, 1, 4], "explain": "天生的外形特徵可以遺傳；曬黑和學會的說話都是後天得來的。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-014", "subject": "科學", "topic": "科06", "level": "應用", "type": "multi", "stem": "住在海邊石縫裏的螃蟹，哪些特徵幫助牠生存？", "options": ["硬殼保護身體", "身體顏色像石頭", "危險時躲進石縫", "用奶餵幼兒", "會開花結果"], "answer": [0, 1, 2], "explain": "硬殼、保護色和躲進石縫都能避開敵人和風浪，餵奶和開花不是螃蟹會做的事。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-015", "subject": "科學", "topic": "科06", "level": "推理", "type": "mcq", "stem": "海邊常常刮大風。生長在那裏的樹，\n最可能有甚麼特徵？", "options": ["根又粗又廣", "樹幹又高又細", "葉又大又薄", "沒有樹皮"], "answer": 0, "explain": "又粗又廣的根能緊緊抓住泥土，大風吹來也不容易倒下。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-016", "subject": "科學", "topic": "科07", "level": "推理", "type": "mcq", "stem": "河邊的樹被砍光，泥土沖進河裏，河水變混濁。\n河裏的水草會怎樣？", "options": ["陽光減少，長得差", "長得更快更高", "完全不受影響", "變成水中的動物"], "answer": 0, "explain": "水變混濁後射入水中的陽光減少，水草造不到足夠養分，就長得差。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-017", "subject": "科學", "topic": "科08", "level": "應用", "type": "multi", "stem": "海邊石灘這個生態系統裏，哪些是非生物部分？", "options": ["海水", "陽光", "海螺", "沙石", "海藻"], "answer": [0, 1, 3], "explain": "生態系統由生物和非生物共同組成，海水、陽光、沙石都是非生物。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-018", "subject": "科學", "topic": "科09", "level": "應用", "type": "order", "stem": "海邊的食物鏈，由被吃的排到吃的：", "options": ["螃蟹", "海藻", "海鷗", "海螺"], "answer": [1, 3, 0, 2], "explain": "食物鏈由自己製造養分的海藻開始，箭嘴指向吃牠的一方。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-019", "subject": "科學", "topic": "科09", "level": "推理", "type": "numpad", "stem": "一片草地的草夠養 360 隻蟋蟀，\n每 18 隻蟋蟀才夠養 1 隻蜥蜴。\n最多可養多少隻蜥蜴？", "answer": 20, "unit": "隻", "explain": "食物鏈越上一層，能養活的數目越少：360 ÷ 18 ＝ 20。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-020", "subject": "科學", "topic": "科10", "level": "知道", "type": "mcq", "stem": "兩隻麻雀爭奪同一個樹洞做巢，這叫做甚麼？", "options": ["競爭", "捕食", "遺傳", "適應"], "answer": 0, "explain": "兩個生物爭同一樣有限的東西（食物、水、空間），就是競爭。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-021", "subject": "科學", "topic": "科10", "level": "推理", "type": "numpad", "stem": "公園本來有 24 隻麻雀。\n放入一群吃同樣食物的鴿子後，只剩 9 隻。\n少了多少隻？", "answer": 15, "unit": "隻", "explain": "鴿子和麻雀爭奪同樣的食物，食物有限，麻雀分到的少了：24 − 9 ＝ 15。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-022", "subject": "科學", "topic": "科11", "level": "知道", "type": "order", "stem": "把洗手的步驟按先後排好：", "options": ["用肥皂搓 20 秒", "用清水沖乾淨", "用水弄濕雙手", "用乾淨毛巾抹乾"], "answer": [2, 0, 1, 3], "explain": "先弄濕再用肥皂搓，把病菌搓下來後沖走，最後抹乾才不易再沾上病菌。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-023", "subject": "科學", "topic": "科17", "level": "推理", "type": "multi", "stem": "小美想讓一粒方糖在水中更快溶解。哪些做法有效？", "options": ["把水加熱", "把方糖壓碎", "用更大的杯", "不停攪拌", "把水放進雪櫃"], "answer": [0, 1, 3], "explain": "加熱、壓碎、攪拌都能加快溶解；杯的大小無關，冷卻反而變慢。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-024", "subject": "科學", "topic": "科22", "level": "應用", "type": "numpad", "stem": "一杯熱水放在桌上，每 5 分鐘量一次溫度：\n0 分鐘 80°C、5 分鐘 68°C、10 分鐘 59°C。\n這 10 分鐘水溫共下降了多少度？", "answer": 21, "unit": "°C", "explain": "80 − 59 = 21；熱由較熱的水傳到較冷的空氣。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-025", "subject": "科學", "topic": "科12", "level": "知道", "type": "mcq", "stem": "下面哪一樣東西有固定的體積，但沒有固定的形狀？", "options": ["牛奶", "石頭", "空氣", "冰"], "answer": 0, "explain": "液體有固定的體積，形狀會隨容器改變；石頭和冰是固體，空氣是氣體。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-026", "subject": "科學", "topic": "科12", "level": "推理", "type": "multi", "stem": "甲：形狀和體積都固定；乙：只有體積固定；丙：兩樣都不固定。\n哪些說法正確？", "options": ["甲是固體", "乙可以是食油", "丙會充滿整個容器", "丙是冰", "乙倒進碗會變成碗形"], "answer": [0, 1, 2, 4], "explain": "三態的分別在於形狀和體積是否固定，這個規律對水以外的物質同樣適用。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-027", "subject": "科學", "topic": "科13", "level": "知道", "type": "multi", "stem": "下面哪些東西是絕緣體，電流不能通過？", "options": ["木筷子", "鋁罐", "橡皮擦", "銅線", "膠尺"], "answer": [0, 2, 4], "explain": "金屬能讓電流通過，是導電體；木、橡膠和塑膠不能，是絕緣體。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-028", "subject": "科學", "topic": "科14", "level": "應用", "type": "order", "stem": "杯裏混了迴紋針、沙和鹽。把分開的步驟排好：", "options": ["加水攪拌，讓鹽溶解", "把鹽水蒸發，取回鹽", "用磁鐵吸走迴紋針", "過濾，沙留在濾紙上"], "answer": [2, 0, 3, 1], "explain": "先用磁鐵取走能被吸的迴紋針，再利用鹽溶於水而沙不溶，過濾後蒸發便取回鹽。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-029", "subject": "科學", "topic": "科14", "level": "推理", "type": "mcq", "stem": "小明把糖水倒進濾紙，想濾出糖，濾紙上卻甚麼也沒有。\n為甚麼？", "options": ["糖已溶解，粒太小穿過濾紙", "糖已經消失了", "濾紙太薄", "糖變成了水"], "answer": 0, "explain": "溶解後的糖化成極小的粒混在水中，能穿過濾紙，要蒸發水分才取得回來。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-030", "subject": "科學", "topic": "科15", "level": "知道", "type": "mcq", "stem": "把兩塊磁鐵的北極和北極慢慢推近，會怎樣？", "options": ["互相推開", "互相吸住", "兩塊都失去磁性", "完全沒有反應"], "answer": 0, "explain": "磁鐵同極相斥、異極相吸，兩個北極互相排斥，所以會推開。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-031", "subject": "科學", "topic": "科16", "level": "應用", "type": "multi", "stem": "下面哪些是化學變化？", "options": ["切開的蘋果變褐色", "雪糕融化成液體", "燒烤時木炭變成灰", "把汽水倒進杯裏", "把麵粉搓成麵團"], "answer": [0, 2], "explain": "化學變化會產生新的物質而且變不回來；融化、傾倒和搓揉只是改變形狀或狀態。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-032", "subject": "科學", "topic": "科16", "level": "推理", "type": "mcq", "stem": "同一塊麵包：甲塊烤到焦黑，乙塊被撕成碎塊。\n哪一句正確？", "options": ["甲化學，乙物理", "兩塊都是化學變化", "甲物理，乙化學", "兩塊都是物理變化"], "answer": 0, "explain": "烤焦產生了新的物質，變不回原來的麵包，是化學變化；撕碎只改變形狀，是物理變化。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-033", "subject": "科學", "topic": "科17", "level": "應用", "type": "mcq", "stem": "四杯水只有溫度不同，同樣的糖溶完所需時間：\n甲 5 分、乙 2 分、丙 8 分、丁 3 分。\n哪一杯的水最熱？", "options": ["乙", "甲", "丙", "丁"], "answer": 0, "explain": "水越熱，糖溶得越快；乙用的時間最短，所以乙杯的水最熱。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-034", "subject": "科學", "topic": "科18", "level": "應用", "type": "numpad", "stem": "兩杯各 100 克水。甲杯溶了 15 克糖，乙杯溶了 40 克糖。\n甲杯要再加多少克糖，才和乙杯一樣甜？", "answer": 25, "unit": "克", "explain": "水量相同時糖越多越甜；40 − 15 ＝ 25，加 25 克糖兩杯就一樣甜。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-035", "subject": "科學", "topic": "科18", "level": "推理", "type": "mcq", "stem": "甲杯：10 克糖溶在 50 克水。\n乙杯：15 克糖溶在 150 克水。\n哪一杯較甜？", "options": ["甲杯，水少很多", "乙杯，因為糖較多", "兩杯一樣甜", "乙杯，因為水較多"], "answer": 0, "explain": "濃度要看糖和水的比例：甲杯每 5 克水有 1 克糖，乙杯每 10 克水才有 1 克糖。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-036", "subject": "科學", "topic": "科19", "level": "知道", "type": "mcq", "stem": "下面哪一組全部都是能源？", "options": ["風、流水、石油氣", "風、磁鐵、石頭", "陽光、沙、鐵線", "煤、膠袋、玻璃"], "answer": 0, "explain": "太陽、風、流水、煤、石油和石油氣都能提供能量，是能源；磁鐵、沙、膠袋只是物料。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-037", "subject": "科學", "topic": "科20", "level": "應用", "type": "numpad", "stem": "同一枝竹在空地上的影子長度：\n上午 9 時 120 厘米，中午 12 時 40 厘米。\n相差多少厘米？", "answer": 80, "unit": "厘米", "explain": "太陽越高，影子越短；中午太陽最高，120 − 40 ＝ 80。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-038", "subject": "科學", "topic": "科21", "level": "知道", "type": "mcq", "stem": "用手指彈一下結他的弦，會聽到聲音。聲音是怎樣來的？", "options": ["弦在快速振動", "弦變熱了", "手指用了力氣", "空氣停止流動"], "answer": 0, "explain": "物體振動才會發出聲音，按停弦的振動，聲音就立刻停止。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-039", "subject": "科學", "topic": "科23", "level": "應用", "type": "mcq", "stem": "電筒裏有電池、燈泡和開關，按下開關後燈亮了。\n開關的作用是甚麼？", "options": ["把電路的缺口合上", "令電池產生更多電", "把燈光反射出去", "令電線變粗"], "answer": 0, "explain": "開關是電路上一個可以打開和合上的缺口，合上後電流才走得完整個圈。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-040", "subject": "科學", "topic": "科23", "level": "推理", "type": "multi", "stem": "下面哪些接法能令燈泡亮起來？", "options": ["電池、電線、燈泡接成圈", "電線只接電池一端", "圈中夾着一條鐵釘", "圈中夾着一塊橡皮", "電池兩端各接一線到燈"], "answer": [0, 2, 4], "explain": "電流要沿着完整的圈流動；圈有缺口或夾着絕緣體都不亮，夾着金屬仍然是通路。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-041", "subject": "科學", "topic": "科24", "level": "應用", "type": "mcq", "stem": "守門員把飛來的足球接住，球停了下來。\n這說明力可以做甚麼？", "options": ["令運動中的物體停下", "令物體變重", "令物體發聲", "令物體變熱"], "answer": 0, "explain": "力可以令靜止的物體動起來，也可以令運動中的物體變慢、轉向或停下。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-042", "subject": "科學", "topic": "科24", "level": "推理", "type": "order", "stem": "同一架玩具車用同樣的力推出，在三種地面滑行。\n由滑得最遠排到最近：", "options": ["鋪了沙的地面", "光滑的瓷磚地", "粗糙的水泥地"], "answer": [1, 2, 0], "explain": "地面越粗糙，摩擦力越大，車滑行的距離越短。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-043", "subject": "科學", "topic": "科25", "level": "應用", "type": "mcq", "stem": "用螺絲批的柄撬起油漆罐蓋，罐邊是支點。\n螺絲批在這裏是甚麼？", "options": ["槓桿", "斜面", "磁鐵", "滑輪"], "answer": 0, "explain": "有支點、能用較小的力撬起東西的長棒就是槓桿，它幫我們省力。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-044", "subject": "科學", "topic": "科26", "level": "知道", "type": "order", "stem": "把地球表面這三樣由多到少排好：", "options": ["陸地", "河湖的淡水", "海洋的鹹水"], "answer": [2, 0, 1], "explain": "地球表面約七成是水，當中絕大部分是海洋的鹹水，陸地約三成，河湖的淡水最少。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-045", "subject": "科學", "topic": "科27", "level": "知道", "type": "mcq", "stem": "玻璃窗主要用哪一種地球資源造成？", "options": ["沙", "木材", "煤", "海水"], "answer": 0, "explain": "玻璃是把沙高溫熔化後造成的，沙是地球上的礦物資源。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-046", "subject": "科學", "topic": "科28", "level": "應用", "type": "multi", "stem": "下面哪些資源用了以後，在人類的時間內還會再有？", "options": ["陽光", "海浪", "石油", "竹", "鋁礦"], "answer": [0, 1, 3], "explain": "可再生資源能源源不絕或短時間內長回來；石油和鋁礦要幾百萬年才形成，用一分少一分。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-047", "subject": "科學", "topic": "科28", "level": "推理", "type": "numpad", "stem": "山上每年長成 400 棵新樹。\n如果每年砍去 700 棵，樹木每年淨減少多少棵？", "answer": 300, "unit": "棵", "explain": "可再生資源也要補充得上才用不完：700 − 400 ＝ 300，森林仍會慢慢消失。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-048", "subject": "科學", "topic": "科29", "level": "應用", "type": "mcq", "stem": "河流轉彎的地方，哪一邊的河岸被沖得最厲害？", "options": ["水流較快的外彎", "水流較慢的內彎", "兩邊一樣厲害", "只有河底會被沖"], "answer": 0, "explain": "轉彎處外側水流較快，侵蝕較強；內側水流慢，反而堆積泥沙。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-049", "subject": "科學", "topic": "科29", "level": "推理", "type": "order", "stem": "有尖角的石頭掉進河裏，被水沖了很多年。\n把它的樣子按先後排好：", "options": ["表面光滑的圓卵石", "有尖角的大石", "角磨鈍了的石塊"], "answer": [1, 2, 0], "explain": "石頭在水中互相碰撞磨擦，尖角一點點被磨掉，時間越長越圓滑。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-050", "subject": "科學", "topic": "科30", "level": "應用", "type": "order", "stem": "崖壁的岩層由上至下是甲、乙、丙，各層都有化石。\n把岩層由最舊排到最新：", "options": ["乙", "甲", "丙"], "answer": [2, 0, 1], "explain": "泥沙一層層由下往上堆積，所以最下面的一層最舊，最上面的一層最新。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-051", "subject": "科學", "topic": "科30", "level": "推理", "type": "mcq", "stem": "在一片沙漠的岩石裏找到很多珊瑚化石。\n這說明甚麼？", "options": ["這裏從前是海", "珊瑚能在沙漠生長", "有人把珊瑚埋在這裏", "沙漠正在變成海"], "answer": 0, "explain": "珊瑚只能生活在海裏，岩石中有珊瑚化石，說明這個地方從前是海。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-052", "subject": "科學", "topic": "科31", "level": "應用", "type": "numpad", "stem": "同一天中午的氣溫：\n澳門 31°C、上海 12°C、昆明 22°C。\n澳門比上海高多少度？", "answer": 19, "unit": "°C", "explain": "同一天不同地方的天氣可以相差很遠：31 − 12 ＝ 19。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-053", "subject": "科學", "topic": "科32", "level": "應用", "type": "order", "stem": "把地球暖化發生的過程按先後排好：", "options": ["地球氣溫上升", "燒煤和石油發電", "海平面上升", "空氣中二氧化碳增多"], "answer": [1, 3, 0, 2], "explain": "燒化石燃料放出二氧化碳，二氧化碳把熱留住令氣溫上升，冰融化後海平面就上升。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-054", "subject": "科學", "topic": "科32", "level": "推理", "type": "multi", "stem": "地球暖化會帶來哪些影響？", "options": ["冰川融化", "海平面上升", "地球轉得更快", "極端天氣增多", "白天變得更長"], "answer": [0, 1, 3], "explain": "暖化令冰融化、海水上升、天氣更極端；地球自轉和白天長短與氣溫無關。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-055", "subject": "科學", "topic": "科33", "level": "知道", "type": "order", "stem": "把這四顆行星按離太陽由近到遠排好：", "options": ["金星", "地球", "火星", "水星"], "answer": [3, 0, 1, 2], "explain": "太陽系由內向外依次是水星、金星、地球、火星，地球是第三顆行星。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-056", "subject": "科學", "topic": "科34", "level": "應用", "type": "order", "stem": "把月相按出現的先後排好：", "options": ["滿月", "新月", "下弦月", "上弦月"], "answer": [1, 3, 0, 2], "explain": "月球繞地球轉一圈約一個月，月相由新月、上弦月、滿月到下弦月再回到新月。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-057", "subject": "科學", "topic": "科34", "level": "推理", "type": "numpad", "stem": "連續兩次滿月相隔約 30 天。\n由滿月到新月大約要多少天？", "answer": 15, "unit": "天", "explain": "新月剛好在兩次滿月的中間，是整個月相週期的一半：30 ÷ 2 ＝ 15。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-058", "subject": "科學", "topic": "科35", "level": "應用", "type": "numpad", "stem": "地球自轉一圈是 24 小時。\n由中午轉到午夜剛好是半圈，要多少小時？", "answer": 12, "unit": "小時", "explain": "地球自轉一圈 24 小時形成一次日夜交替：24 ÷ 2 ＝ 12。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-059", "subject": "科學", "topic": "科36", "level": "應用", "type": "numpad", "stem": "澳門的日照時間：6 月某天 13 小時，12 月某天 10 小時。\n相差多少小時？", "answer": 3, "unit": "小時", "explain": "地球公轉時地軸是斜的，夏天白晝長、冬天白晝短：13 − 10 ＝ 3。", "source_note": "原創，未見於練習冊／校本"}, {"id": "G-S-2026-09-060", "subject": "科學", "topic": "科36", "level": "推理", "type": "mcq", "stem": "澳門是夏天時，南半球的澳洲是甚麼季節？", "options": ["冬天，南北半球相反", "夏天，全球一起變熱", "夏天，地球離太陽近", "秋天，因為澳洲在南邊"], "answer": 0, "explain": "季節不是由地球離太陽的遠近決定；澳門是夏天時南半球正斜離太陽，所以是冬天。", "source_note": "原創，未見於練習冊／校本"}];
+const TUG_TAUGHT = {"2026-09-21": ["數01", "科01", "科02"], "2026-10-05": ["數03", "科03"], "2026-10-16": ["數04", "科04"], "2026-10-26": ["科06"], "2026-10-30": ["數13", "數14"], "2026-11-06": ["科08", "科09", "科10"], "2026-11-09": ["數15", "數16"], "2026-11-16": ["科05", "科07"], "2026-11-20": ["數08"], "2026-11-27": ["科12", "科14", "科17", "科18"], "2026-11-30": ["數16"], "2026-12-07": ["科13", "科16"], "2026-12-11": ["數18"], "2026-12-18": ["科20", "科21", "科22"], "2027-01-04": ["數20"], "2027-01-11": ["數06", "科23", "科24", "科25"], "2027-01-18": ["數09"], "2027-01-22": ["科26", "科29", "科30"], "2027-01-29": ["數10", "數11", "數12"], "2027-02-19": ["科27", "科28", "科32"], "2027-03-01": ["數21", "數22", "科31"], "2027-03-12": ["數21", "數23", "科33", "科34", "科35", "科36"]};
+const TUG_TOPICS = {"數01": "辨認位值與排列整數的順序", "數02": "四位數以內的加減法", "數03": "三位數以內的數乘一位數與兩位數乘兩位數的乘法", "數04": "三位數以內的數除以一位數的除法", "數05": "解答奇數與偶數、倍數，或因數的問題", "數06": "取近似值或估計至整數", "數07": "找出算式中缺少的數字或運算符號", "數08": "數型的延伸或找出數型中缺少的數字", "數09": "分數的表示、比較和排序", "數10": "簡單分數的加減", "數11": "兩位以內小數的表示、比較和排序", "數12": "兩位以內小數的加減", "數13": "長度的測量、估計和加減", "數14": "用合適的單位做質量、體積或時間的加減", "數15": "計算多邊形的周界", "數16": "找出被方塊覆蓋的圖形的面積或被立方體填滿的立體的體積", "數17": "認識與繪製平行線和垂直線", "數18": "角的比較與作圖", "數19": "描述與繪畫常見平面圖形（例如：圓形、三角形、四邊形）", "數20": "描述與繪畫常見立體圖形（例如：正方體、長方體、錐體、柱體、球體）", "數21": "讀取與解釋呈現的數據", "數22": "製作或完成呈現的數據", "數23": "從兩個或以上數據來源得出結論", "科01": "生物和非生物的基本區別", "科02": "界定生物主要類別的特徵", "科03": "生物主要構造的功能（例如：植物的根部）", "科04": "常見植物和動物的生命週期的階段（例如：開花植物、青蛙）", "科05": "生物的遺傳特徵", "科06": "生物如何在其環境中生存（例如：生理特徵、行為）", "科07": "人類行為如何影響環境", "科08": "常見的生態系統及其生物體（例如：森林、沙漠）", "科09": "解釋簡單的食物鏈", "科10": "生態系統內的競爭", "科11": "人類維持健康和預防疾病的方法", "科12": "固體、液體、氣體及其形狀和體積的差異", "科13": "根據物理特性對材料分類", "科14": "混合物的例子和如何分離個別成分（例如：過濾、蒸發）", "科15": "磁鐵的吸引和排斥", "科16": "日常生活中的物理變化和化學變化的例子", "科17": "如何使固體更快在液體中溶解（例如：攪拌、加熱）", "科18": "溶液的濃度", "科19": "能源（例如：太陽、風、水、煤、石油、石油氣）", "科20": "光與陰影、反射和彩虹的關係", "科21": "振動與聲音的關係", "科22": "熱能由較熱物體到較冷物體的傳播", "科23": "簡單電路", "科24": "力如何影響物體的運動（例如：重力、推力、拉力、摩擦力）", "科25": "簡單機械的例子（例如：槓桿、斜面）", "科26": "地球表面的物質組成（例如：陸地、淡水、鹹水）", "科27": "地球資源和人類如何使用它們", "科28": "可再生和不可再生資源", "科29": "風和水如何隨時間改變地球的表面", "科30": "化石能顯示有關地球的歷史", "科31": "天氣如何日復日並隨着地理位置而改變", "科32": "地球暖化的影響", "科33": "太陽系的組成（太陽、地球、月球和其他行星）", "科34": "月球環繞地球運動如何改變其外觀", "科35": "地球自轉與日夜的成因", "科36": "地球每年環繞太陽公轉如何產生季節或季節變化"};
+</script>
+<script>
+/* src/types/mcq.js */
+/* 四選一：按選項即交卷。鍵盤：左隊 1–4、右隊 Z X C V（由 engine 轉成 position 後呼叫 controller.press）。 */
+(function () {
+  const T = globalThis.TUG = globalThis.TUG || {};
+  T.types = T.types || {};
+
+  function judge(item, response) {
+    return Number.isInteger(response) && response === item.answer;
+  }
+
+  function render(q, side, el, onSubmit) {
+    el.innerHTML = ""; el.className = "body grid2";
+    let done = false; const btns = [];
+    q.view.forEach((oi, pos) => {
+      const b = document.createElement("button"); b.className = "opt"; b.dataset.oi = oi;
+      b.innerHTML = `<b>${pos + 1}</b><span>${q.options[oi]}</span>`;
+      b.addEventListener("pointerdown", e => { e.preventDefault(); pick(pos); });
+      btns.push(b); el.appendChild(b);
+    });
+    function pick(pos) {
+      if (done || !btns[pos]) return; done = true;
+      btns[pos].classList.add("picked"); onSubmit(q.view[pos]);
+    }
+    return {
+      lock() { done = true; },
+      reveal(correct) {
+        btns.forEach(b => { const oi = +b.dataset.oi;
+          if (oi === q.answer) b.classList.add("right");
+          else if (b.classList.contains("picked")) b.classList.add("wrong");
+          else b.classList.add("dim"); });
+      },
+      press: pick,
+    };
+  }
+
+  T.types.mcq = { judge, render, limit: 30, submitOnPick: true };
+})();
+
+</script>
+<script>
+/* src/types/numpad.js */
+/* 數字輸入：每隊一個 0–9、小數點、負號、退格的鍵盤，按「確定」交卷。 */
+(function () {
+  const T = globalThis.TUG = globalThis.TUG || {};
+  T.types = T.types || {};
+
+  function parse(s) {
+    if (typeof s !== "string") return NaN;
+    const t = s.trim().replace(/\.$/, "");
+    if (!/^-?\d+(\.\d+)?$/.test(t)) return NaN;
+    return Number(t);
+  }
+
+  function judge(item, response) {
+    const v = parse(response);
+    if (Number.isNaN(v)) return false;
+    const tol = item.tolerance || 0;
+    return Math.abs(v - item.answer) <= tol + 1e-9;
+  }
+
+  function render(q, side, el, onSubmit) {
+    el.innerHTML = ""; el.className = "body col";
+    let done = false, val = "";
+    const disp = document.createElement("div"); disp.className = "np-display";
+    const unit = q.unit ? `<small>${q.unit}</small>` : "";
+    const show = () => { disp.innerHTML = (val || "&nbsp;") + unit; ok.disabled = Number.isNaN(parse(val)); };
+    const keys = document.createElement("div"); keys.className = "np-keys";
+    ["7", "8", "9", "⌫", "4", "5", "6", "−", "1", "2", "3", ".", "0"].forEach(k => {
+      const b = document.createElement("button"); b.textContent = k;
+      if (k === "0") b.style.gridColumn = "span 2";
+      b.addEventListener("pointerdown", e => { e.preventDefault(); key(k); });
+      keys.appendChild(b);
+    });
+    const ok = document.createElement("button"); ok.className = "confirm"; ok.textContent = "確定";
+    ok.addEventListener("pointerdown", e => { e.preventDefault(); submit(); });
+    el.append(disp, keys, ok); show();
+    function key(k) {
+      if (done) return;
+      if (k === "⌫") val = val.slice(0, -1);
+      else if (k === "−") val = val.startsWith("-") ? val.slice(1) : "-" + val;
+      else if (k === ".") { if (!val.includes(".")) val += (val === "" || val === "-") ? "0." : "."; }
+      else if (val.replace("-", "").length < 8) val += k;
+      show();
+    }
+    function submit() { if (done || Number.isNaN(parse(val))) return; done = true; ok.disabled = true; onSubmit(val); }
+    return {
+      lock() { done = true; ok.disabled = true; },
+      reveal(correct) {
+        disp.classList.add(correct ? "right" : "wrong");
+        disp.style.background = correct ? "#CFF3D8" : "#FBD5D3";
+        if (!correct) disp.innerHTML = `<s style="opacity:.6">${val || "—"}</s>　${q.answer}${unit}`;
+      },
+      press() {},
+    };
+  }
+
+  T.types.numpad = { judge, render, parse, limit: 45, submitOnPick: false };
+})();
+
+</script>
+<script>
+/* src/types/order.js */
+/* 排序：3–4 張卡，按一下選卡、再按另一張交換位置，按「確定」交卷。 */
+(function () {
+  const T = globalThis.TUG = globalThis.TUG || {};
+  T.types = T.types || {};
+
+  function judge(item, response) {
+    return Array.isArray(response) && response.length === item.answer.length
+      && response.every((v, i) => v === item.answer[i]);
+  }
+
+  function render(q, side, el, onSubmit) {
+    el.innerHTML = ""; el.className = "body col";
+    let done = false, selected = -1;
+    let cur = q.view.slice();                      // 目前排列：位置 → 選項索引
+    const list = document.createElement("div"); list.className = "ord";
+    const ok = document.createElement("button"); ok.className = "confirm"; ok.textContent = "確定";
+    ok.addEventListener("pointerdown", e => { e.preventDefault(); submit(); });
+    el.append(list, ok);
+    function draw() {
+      list.innerHTML = "";
+      cur.forEach((oi, pos) => {
+        const b = document.createElement("button"); b.className = "opt" + (pos === selected ? " sel" : ""); b.dataset.oi = oi;
+        b.innerHTML = `<b>${pos + 1}</b><span>${q.options[oi]}</span>`;
+        b.addEventListener("pointerdown", e => { e.preventDefault(); tap(pos); });
+        list.appendChild(b);
+      });
+    }
+    function tap(pos) {
+      if (done) return;
+      if (selected === -1) selected = pos;
+      else if (selected === pos) selected = -1;
+      else { [cur[selected], cur[pos]] = [cur[pos], cur[selected]]; selected = -1; }
+      draw();
+    }
+    function submit() { if (done) return; done = true; ok.disabled = true; selected = -1; draw(); onSubmit(cur.slice()); }
+    draw();
+    return {
+      lock() { done = true; ok.disabled = true; },
+      reveal(correct) {
+        [...list.children].forEach((b, pos) => b.classList.add(cur[pos] === q.answer[pos] ? "right" : "wrong"));
+        if (!correct) {
+          const ans = document.createElement("div"); ans.style.cssText = "font-size:2.4vh;font-weight:700;margin-top:.6vh";
+          ans.textContent = "正確順序：" + q.answer.map(oi => q.options[oi]).join(" → ");
+          el.appendChild(ans);
+        }
+      },
+      press() {},
+    };
+  }
+
+  T.types.order = { judge, render, limit: 45, submitOnPick: false };
+})();
+
+</script>
+<script>
+/* src/types/multi.js */
+/* 多選：五個選項可切換勾選，按「確定」交卷；必須完全正確。 */
+(function () {
+  const T = globalThis.TUG = globalThis.TUG || {};
+  T.types = T.types || {};
+
+  function judge(item, response) {
+    if (!Array.isArray(response) || !response.length) return false;
+    const a = [...new Set(response)].sort((x, y) => x - y);
+    const b = [...item.answer].sort((x, y) => x - y);
+    return a.length === b.length && a.every((v, i) => v === b[i]);
+  }
+
+  function render(q, side, el, onSubmit) {
+    el.innerHTML = ""; el.className = "body col";
+    let done = false; const btns = []; const sel = new Set();
+    q.view.forEach((oi, pos) => {
+      const b = document.createElement("button"); b.className = "opt"; b.dataset.oi = oi;
+      b.innerHTML = `<b>${pos + 1}</b><span>${q.options[oi]}</span>`;
+      b.addEventListener("pointerdown", e => { e.preventDefault(); toggle(pos); });
+      btns.push(b); el.appendChild(b);
+    });
+    const ok = document.createElement("button"); ok.className = "confirm"; ok.textContent = "確定"; ok.disabled = true;
+    ok.addEventListener("pointerdown", e => { e.preventDefault(); submit(); });
+    el.appendChild(ok);
+    function toggle(pos) {
+      if (done || !btns[pos]) return;
+      const oi = q.view[pos];
+      if (sel.has(oi)) { sel.delete(oi); btns[pos].classList.remove("picked"); } else { sel.add(oi); btns[pos].classList.add("picked"); }
+      ok.disabled = sel.size === 0;
+    }
+    function submit() { if (done || !sel.size) return; done = true; ok.disabled = true; onSubmit([...sel]); }
+    return {
+      lock() { done = true; ok.disabled = true; },
+      reveal() {
+        btns.forEach(b => { const oi = +b.dataset.oi; const chosen = sel.has(oi), right = q.answer.includes(oi);
+          if (right) b.classList.add("right");
+          else if (chosen) b.classList.add("wrong");
+          else b.classList.add("dim");
+          if (right && !chosen) b.classList.add("picked"); });
+      },
+      press: toggle,
+    };
+  }
+
+  T.types.multi = { judge, render, limit: 30, submitOnPick: false };
+})();
+
+</script>
+<script>
+/* src/engine.js */
+/* 搶答拔河引擎。純函數（可在 node 測）在前；DOM 流程在 Task 10 補於檔尾。 */
+(function () {
+  const T = globalThis.TUG = globalThis.TUG || {};
+  T.PULL = { "知道": 1, "應用": 1, "推理": 2 };
+
+  // ---------- 隨機 ----------
+  T.seededRng = function (seed) {
+    let s = (seed >>> 0) || 1;
+    return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+  };
+  T.shuffle = function (arr, rng) {
+    const a = arr.slice(); rng = rng || Math.random;
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  };
+
+  // ---------- 計分 ----------
+  // delta < 0 繩結向紅隊（左），> 0 向藍隊（右）
+  T.resolve = function ({ pull, ok, ms }) {
+    const m = ms.map(v => (typeof v === "number" ? v : Infinity));
+    if (ok[0] && ok[1]) {
+      if (m[0] === m[1]) return { delta: 0, who: null, msg: "都答對，一樣快！" };
+      const fast = m[0] < m[1] ? 0 : 1;
+      return { delta: fast === 0 ? -1 : 1, who: fast, msg: "都答對，較快的多拉一格！" };
+    }
+    if (ok[0]) return { delta: -pull, who: 0, msg: "拉！" };
+    if (ok[1]) return { delta: pull, who: 1, msg: "拉！" };
+    return { delta: 0, who: null, msg: "都不夠力！" };
+  };
+
+  // ---------- 題型分散：同一題型不連續超過 3 題（反覆修補直到無違規或無法改善） ----------
+  T.spreadTypes = function (list) {
+    const out = list.slice();
+    const runAt = (a, i) => { let r = 1; for (let k = i; k > 0 && a[k].type === a[k - 1].type; k--) r++; return r; };   // 以 i 結尾的連續長度
+    const violations = a => a.filter((_, k) => runAt(a, k) > 3).length;
+    for (let guard = 0; guard < 100; guard++) {
+      const cur = violations(out);
+      if (cur === 0) break;
+      const i = out.findIndex((_, k) => runAt(out, k) > 3);
+      let fixed = false;
+      for (let j = 0; j < out.length && !fixed; j++) {
+        if (out[j].type === out[i].type) continue;
+        const trial = out.slice(); [trial[i], trial[j]] = [trial[j], trial[i]];
+        if (violations(trial) < cur) { out.splice(0, out.length, ...trial); fixed = true; }
+      }
+      if (!fixed) break;      // 例如 7 個同題型加 1 個其他：無解，照原樣回傳
+    }
+    return out;
+  };
+
+  // ---------- 顯示順序（兩隊看到同一順序，公平） ----------
+  T.prepareView = function (item, rng) {
+    const q = Object.assign({}, item);
+    if (item.type === "numpad") { q.view = null; return q; }
+    const idx = item.options.map((_, i) => i);
+    let v = T.shuffle(idx, rng);
+    if (item.type === "order") {
+      let guard = 0;
+      while (v.every((x, i) => x === item.answer[i]) && guard++ < 20) v = T.shuffle(idx, rng);
+    }
+    q.view = v;
+    return q;
+  };
+
+  // ---------- 日期 ----------
+  T.daysBetween = function (a, b) { return Math.round((Date.parse(b) - Date.parse(a)) / 86400000); };
+  T.todayStr = function (d) { d = d || new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+
+  // ---------- 抽題 ----------
+  // opts: {n, subject: 數學|科學|混合, scope: taught|all|<主題編號>, taughtSet:Set, recent:Map(id→date), today, rng}
+  // 優先次序：新鮮度（14 天內沒出過）> 七三分 > 層次 2/5/3 > 題型平均
+  T.pick = function (bank, opts) {
+    const rng = opts.rng || Math.random;
+    const n = opts.n || 10;
+    const notes = { fallbackAll: false, repeats: 0 };
+    let pool = bank.filter(i => opts.subject === "混合" || i.subject === opts.subject);
+    let scope = opts.scope || "taught";
+    if (scope !== "taught" && scope !== "all") pool = pool.filter(i => i.topic === scope);
+    if (scope === "taught" && (!opts.taughtSet || opts.taughtSet.size === 0)) { scope = "all"; notes.fallbackAll = true; }
+    const isTaught = i => scope === "taught" && opts.taughtSet.has(i.topic);
+
+    const levelBudget = { "知道": Math.round(n * 0.2), "應用": Math.round(n * 0.5) };
+    levelBudget["推理"] = n - levelBudget["知道"] - levelBudget["應用"];
+    const typeCount = { mcq: 0, numpad: 0, order: 0, multi: 0 };
+    const chosen = [], chosenIds = new Set();
+    const age = i => opts.recent.has(i.id) ? T.daysBetween(opts.recent.get(i.id), opts.today) : Infinity;
+
+    // 從 list 取最多 count 題，只取「距上次出題超過 days 天」的；回傳實際取到的數目
+    function take(list, count, days) {
+      let got = 0;
+      while (got < count) {
+        const cands = list.filter(i => !chosenIds.has(i.id) && (days < 0 || age(i) > days));
+        if (!cands.length) break;
+        // 先選剩餘預算最多的層次；同層次內選目前最少的題型
+        const levels = Object.keys(levelBudget).filter(l => levelBudget[l] > 0 && cands.some(c => c.level === l))
+          .sort((a, b) => levelBudget[b] - levelBudget[a]);
+        const byLevel = levels.length ? cands.filter(c => c.level === levels[0]) : cands;
+        const minType = Math.min(...byLevel.map(c => typeCount[c.type]));
+        const best = byLevel.filter(c => typeCount[c.type] === minType);
+        const it = best[Math.floor(rng() * best.length)];
+        const q = Object.assign({}, it, { repeat: age(it) <= 7 });
+        if (q.repeat) notes.repeats++;
+        chosen.push(q); chosenIds.add(it.id); typeCount[it.type]++;
+        if (levelBudget[it.level] > 0) levelBudget[it.level]--;
+        got++;
+      }
+      return got;
+    }
+
+    // 每一層新鮮度內做七三分：已教配額 → 全範圍配額 → 同層剩餘任取；不夠才放寬到下一層，最後一層不看日期
+    const tTarget = scope === "taught" ? Math.round(n * 0.7) : 0;
+    const inT = pool.filter(isTaught), outT = pool.filter(i => !isTaught(i));
+    const tGot = () => chosen.filter(isTaught).length;
+    for (const days of [14, 7, -1]) {
+      let need = n - chosen.length;
+      if (need <= 0) break;
+      need -= take(inT, Math.min(need, Math.max(0, tTarget - tGot())), days);
+      need -= take(outT, Math.min(need, Math.max(0, (n - tTarget) - (chosen.length - tGot()))), days);
+      take(pool, need, days);
+    }
+
+    // 推理題放後半：非推理先、推理後，各自打亂，再分散題型
+    const nonR = T.shuffle(chosen.filter(q => q.level !== "推理"), rng), R = T.shuffle(chosen.filter(q => q.level === "推理"), rng);
+    return { items: T.spreadTypes(nonR.concat(R)), notes };
+  };
+
+  // ---------- 紀錄 ----------
+  T.RECORD_COLS = ["date", "session_id", "item_id", "subject", "topic", "level", "type", "red_correct", "blue_correct", "red_ms", "blue_ms", "repeat"];
+  T.records = function (storage) {
+    const KEY = "tug.records";
+    storage = storage || globalThis.localStorage;
+    function load() { try { const v = JSON.parse(storage.getItem(KEY) || "[]"); return Array.isArray(v) ? v : []; } catch { return []; } }
+    function save(rows) { storage.setItem(KEY, JSON.stringify(rows)); }
+    return {
+      load,
+      append(rows) { save(load().concat(rows)); },
+      clear() { storage.removeItem(KEY); },
+      recentMap() { const m = new Map(); for (const r of load()) if (!m.has(r.item_id) || r.date > m.get(r.item_id)) m.set(r.item_id, r.date); return m; },
+      toCSV(rows) {
+        const esc = v => { v = v == null ? "" : String(v); return /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v; };
+        return "\uFEFF" + [T.RECORD_COLS.join(",")].concat(rows.map(r => T.RECORD_COLS.map(c => esc(r[c])).join(","))).join("\n");
+      },
+    };
+  };
+
+  // ======================================================== DOM \u6D41\u7A0B\uFF08\u53EA\u5728\u700F\u89BD\u5668\u57F7\u884C\uFF09
+  if (typeof document === "undefined") return;
+  const $ = id => document.getElementById(id);
+  const bank = typeof TUG_BANK !== "undefined" ? TUG_BANK : [], taughtTable = typeof TUG_TAUGHT !== "undefined" ? TUG_TAUGHT : {}, topicText = typeof TUG_TOPICS !== "undefined" ? TUG_TOPICS : {};
+  const R = T.records();
+  const STEP = 60;   // 每拉一格，繩子、繩結與兩隊一起移動 60 個 viewBox 單位
+  const S = { names: ["\u7D05\u968A", "\u85CD\u968A"], winAt: 5, pos: 0, items: [], qi: 0, q: null, ctrl: [null, null], resp: [null, null], ms: [null, null],
+              qStart: 0, timer: null, tleft: 0, limitScale: 1, stats: [[0, 0], [0, 0]], bothWrong: [], session: "", rows: [] };
+
+  function taughtSet(today) {
+    const s = new Set();
+    for (const d in taughtTable) if (d < today) taughtTable[d].forEach(t => s.add(t));
+    return s;
+  }
+  function show(id) { document.querySelectorAll(".screen").forEach(s => s.classList.remove("on")); $(id).classList.add("on"); }
+  function on(id, ev, fn) { $(id).addEventListener(ev, fn); }
+
+  // ---------- \u958B\u59CB\u756B\u9762 ----------
+  $("bankinfo").textContent = `\u984C\u5EAB ${bank.length} \u984C\uFF08\u6578\u5B78 ${bank.filter(i => i.subject === "\u6578\u5B78").length}\u3001\u79D1\u5B78 ${bank.filter(i => i.subject === "\u79D1\u5B78").length}\uFF09`;
+  {
+    const today = T.todayStr(), ts = taughtSet(today);
+    $("startNote").textContent = ts.size ? `\u5DF2\u6559\u4E3B\u984C ${ts.size} \u500B\uFF08\u4F9D\u79D1\u666E\u6F5B\u80FD\u73ED\u9032\u5EA6\uFF0C${today}\uFF09` : "\u5B78\u671F\u5C1A\u672A\u958B\u59CB\uFF0C\u300C\u8DDF\u9032\u5EA6\u300D\u6703\u81EA\u52D5\u6539\u70BA\u5168\u7BC4\u570D";
+  }
+  {
+    const sel = $("scope");     // \u300C\u6307\u5B9A\u55AE\u4E00\u4E3B\u984C\u300D\uFF1A\u984C\u5EAB\u88E1\u6709\u7684\u4E3B\u984C\u5404\u4E00\u500B\u9078\u9805
+    [...new Set(bank.map(i => i.topic))].sort().forEach(t => {
+      const o = document.createElement("option"); o.value = t; o.textContent = `\u53EA\u51FA ${t} ${topicText[t] || ""}`.trim(); sel.appendChild(o);
+    });
+  }
+  on("startBtn", "click", startGame);
+  on("exportBtn", "click", () => {
+    const rows = R.load(); if (!rows.length) { alert("\u9084\u6C92\u6709\u7D00\u9304\u3002"); return; }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([R.toCSV(rows)], { type: "text/csv;charset=utf-8" }));
+    a.download = `\u6436\u7B54\u62D4\u6CB3\u7D00\u9304_${T.todayStr()}.csv`; a.click();
+  });
+  on("clearBtn", "click", () => { if (confirm("\u78BA\u5B9A\u6E05\u9664\u5168\u90E8\u4F5C\u7B54\u7D00\u9304\uFF1F\u5EFA\u8B70\u5148\u532F\u51FA\u3002") && confirm("\u771F\u7684\u8981\u6E05\u9664\u55CE\uFF1F\u6B64\u52D5\u4F5C\u4E0D\u80FD\u5FA9\u539F\u3002")) { R.clear(); alert("\u5DF2\u6E05\u9664\u3002"); } });
+  on("againBtn", "click", () => location.reload());
+  on("fsBtn", "click", toggleFS);
+  on("nextBtn", "click", nextQuestion);
+  function toggleFS() { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+
+  function startGame() {
+    S.names = [$("nameL").value.trim() || "\u7D05\u968A", $("nameR").value.trim() || "\u85CD\u968A"];
+    S.winAt = +$("winAt").value; S.limitScale = +$("tlimit").value;
+    const today = T.todayStr();
+    const r = T.pick(bank, { n: +$("nq").value, subject: $("subject").value, scope: $("scope").value,
+      taughtSet: taughtSet(today), recent: R.recentMap(), today });
+    if (!r.items.length) { alert("\u9019\u500B\u7BC4\u570D\u6C92\u6709\u984C\u76EE\u3002"); return; }
+    S.items = r.items; S.qi = 0; S.pos = 0; S.stats = [[0, 0], [0, 0]]; S.bothWrong = []; S.rows = [];
+    S.session = today.replace(/-/g, "") + "-" + new Date().toTimeString().slice(0, 5).replace(":", "");
+    $("scoreL").textContent = S.names[0]; $("scoreR").textContent = S.names[1];
+    $("head0").textContent = S.names[0] + " \u9019\u908A\u7B54"; $("head1").textContent = "\u9019\u908A\u7B54 " + S.names[1];
+    const gx = 800 - S.winAt * STEP, gr = 800 + S.winAt * STEP;
+    ["goalL"].forEach(id => { $(id).setAttribute("x1", gx); $(id).setAttribute("x2", gx); });
+    ["goalR"].forEach(id => { $(id).setAttribute("x1", gr); $(id).setAttribute("x2", gr); });
+    drawTeam("teamL", 0); drawTeam("teamR", 1);
+    if (r.notes.fallbackAll) callout("\u5168\u7BC4\u570D", null);
+    show("game"); updateRope(); nextQuestion();
+  }
+
+  // ---------- \u4E00\u984C ----------
+  function nextQuestion() {
+    if (S.qi >= S.items.length) { finish(); return; }
+    const q = S.q = T.prepareView(S.items[S.qi], Math.random);
+    const mod = T.types[q.type];
+    $("qno").textContent = `\u7B2C ${S.qi + 1}\uFF0F${S.items.length} \u984C`;
+    $("domTag").textContent = `${q.subject} \u00B7 ${q.topic} \u00B7 ${q.level}`;
+    $("pullTag").textContent = `\u7B54\u5C0D\u62C9 ${T.PULL[q.level]} \u683C`;
+    $("typeTag").textContent = { mcq: "\u56DB\u9078\u4E00", numpad: "\u8F38\u5165\u6578\u5B57", order: "\u6392\u9806\u5E8F", multi: "\u9078\u51FA\u6240\u6709\u6B63\u78BA\u7684" }[q.type];
+    $("qtext").textContent = q.stem;
+    $("why").className = "why"; $("why").textContent = ""; $("nextBtn").className = "next";
+    S.resp = [null, null]; S.ms = [null, null]; S.qStart = Date.now();
+    delete $("game").dataset.result;          // 動畫鉤子：每題開始時清除上一題結果
+    [0, 1].forEach(side => {
+      $("side" + side).classList.remove("done", "locked");
+      S.ctrl[side] = mod.render(q, side, $("body" + side), resp => submit(side, resp));
+    });
+    startTimer(Math.round(mod.limit * S.limitScale));
+  }
+  function submit(side, resp) {
+    if (S.resp[side] !== null) return;
+    S.resp[side] = resp; S.ms[side] = Date.now() - S.qStart;
+    $("side" + side).classList.add("done");
+    if (S.resp[0] !== null && S.resp[1] !== null) judge();
+  }
+  function judge() {
+    stopTimer();
+    const q = S.q, mod = T.types[q.type];
+    [0, 1].forEach(side => { S.ctrl[side].lock(); $("side" + side).classList.add("locked"); });
+    const ok = [0, 1].map(side => S.resp[side] !== null && mod.judge(q, S.resp[side]));
+    const ms = [0, 1].map(side => S.resp[side] !== null ? S.ms[side] : null);
+    const r = T.resolve({ pull: T.PULL[q.level], ok, ms });
+    [0, 1].forEach(side => { S.stats[side][ok[side] ? 0 : 1]++; S.ctrl[side].reveal(ok[side]); });
+    if (!ok[0] && !ok[1]) S.bothWrong.push(q);
+    S.pos += r.delta;
+    const timedOut = S.resp.some(x => x === null);
+    $("game").dataset.result = r.who === null ? (timedOut ? "timeout" : "none") : String(r.who);   // 動畫鉤子：0 紅拉贏、1 藍拉贏、none 都錯、timeout 時間到
+    callout(timedOut && !ok[0] && !ok[1] ? "\u6642\u9593\u5230\uFF01" : r.msg, r.who);
+    $("why").textContent = ((ok[0] && ok[1]) ? "\u2713 " : "\u6B63\u78BA\u7B54\u6848\uFF1A" + answerText(q) + "\u3000") + q.explain; $("why").classList.add("show");
+    S.rows.push({ date: T.todayStr(), session_id: S.session, item_id: q.id, subject: q.subject, topic: q.topic, level: q.level, type: q.type,
+      red_correct: ok[0] ? 1 : 0, blue_correct: ok[1] ? 1 : 0, red_ms: ms[0] ?? "", blue_ms: ms[1] ?? "", repeat: q.repeat ? 1 : 0 });
+    R.append([S.rows[S.rows.length - 1]]);
+    updateRope();
+    S.qi++;
+    if (Math.abs(S.pos) >= S.winAt) { setTimeout(finish, 1400); return; }
+    $("nextBtn").classList.add("show");
+  }
+  function answerText(q) {
+    if (q.type === "mcq") return q.options[q.answer];
+    if (q.type === "numpad") return q.answer + (q.unit || "");
+    if (q.type === "order") return q.answer.map(i => q.options[i]).join(" \u2192 ");
+    return q.answer.map(i => q.options[i]).join("\u3001");
+  }
+
+  // ---------- \u8A08\u6642 ----------
+  function startTimer(limit) {
+    stopTimer(); const box = $("timerBox"), bar = $("timerBar");
+    if (!limit) { box.style.visibility = "hidden"; return; }
+    box.style.visibility = "visible"; S.tleft = limit;
+    bar.className = ""; bar.style.transition = "none"; bar.style.width = "100%";
+    requestAnimationFrame(() => { bar.style.transition = "width 1s linear"; });
+    S.timer = setInterval(() => {
+      S.tleft--; bar.style.width = (S.tleft / limit * 100) + "%";
+      if (S.tleft <= 5) bar.className = "low";
+      if (S.tleft <= 0) { stopTimer(); judge(); }
+    }, 1000);
+  }
+  function stopTimer() { clearInterval(S.timer); S.timer = null; }
+
+  // ---------- \u5834\u666F ----------
+  function updateRope() {
+    // 繩結固定在繩子的 800 處；整條繩（含繩結）與兩隊一起平移，像真的拔河一樣
+    const dx = S.pos * STEP, ease = "transform .7s cubic-bezier(.2,1.3,.4,1)";
+    $("knot").style.transform = "translate(800px,0)";
+    $("knotTxt").textContent = S.pos === 0 ? "0" : (S.pos < 0 ? "\u25C0 " + (-S.pos) : S.pos + " \u25B6");
+    ["ropeG", "teamL", "teamR"].forEach(id => { $(id).style.transition = ease; $(id).style.transform = `translate(${dx}px,0)`; });
+  }
+  // 畫一隊四個卡通小學生：面向中線、身體向後傾、雙手握繩、前腳蹬後腳撐。座標以腳底 (x, 292) 為原點，繩在 y=205（局部約 -95，經 0.8–0.9 縮放後仍對到繩）。
+  function drawTeam(gid, side) {
+    const col = side ? "#2457E6" : "#E8413C", dark = side ? "#183FA8" : "#B72E2A";
+    const skins = side ? ["#BB8058", "#F1C7A0", "#DFAB7E", "#F7D6B2"] : ["#F1C7A0", "#C38A61", "#F7D6B2", "#DFAB7E"];
+    const hairs = ["#33312B", "#604131", "#33312B", "#835035"];
+    let art = "";
+    for (let i = 0; i < 4; i++) {
+      const x = side ? 1050 + i * 112 : 550 - i * 112, skin = skins[i], hair = hairs[i];
+      const style = (i + side * 2) % 4;
+      const hairArt = [
+        `<path d="M-39-145q-9-45 31-45 31-4 37 26l-17-6-8 13-15-8-14 18Z" fill="${hair}"/>`,
+        `<path d="M-36-154q-8-33 25-38 33-3 42 28l-20-4-13 11-16-9Z" fill="${hair}"/><path d="M-37-170q-34-11-32 17 1 25-19 28 39 12 43-25" fill="${hair}"/><path d="M-44-167l11 9" stroke="${col}" stroke-width="9"/>`,
+        `<path d="M-40-151l-4-25 13 1 5-20 13 9 16-13 8 15 17-4 4 25-21-7-11 12-14-7Z" fill="${hair}"/>`,
+        `<path d="M-38-148q-17-42 22-45 47-4 48 41l-20-13-16 8-16-7-5 18Z" fill="${hair}"/>`
+      ][style];
+      art += `<g class="kid kid-${i}" transform="translate(${x},292) scale(${side ? -1 : 1},1)">
+        <ellipse cx="-8" cy="2" rx="49" ry="7" fill="#24332E" opacity=".18"/>
+        <g class="dust" fill="#FFFCEF"><ellipse cx="-48" cy="-4" rx="15" ry="8"/><circle cx="-63" cy="-13" r="7"/><circle cx="39" cy="-7" r="8"/></g>
+        <g class="kid-motion" stroke="#24332E" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M-19-59L-36-33-50-10M7-59L29-39 21-10" fill="none" stroke="#24332E" stroke-width="19"/>
+          <path d="M-19-59L-36-33-50-10M7-59L29-39 21-10" fill="none" stroke="${skin}" stroke-width="11"/>
+          <path d="M-44-20l-6 10m73-10-2 10" stroke="#FFFCEF" stroke-width="13"/>
+          <path d="M-57-13q-9 3-8 13h33q6-8-11-13Z M17-13q-8 3-8 13h35q2-10-16-13Z" fill="#FFFCEF"/>
+          <path d="M-62-3h26M13-3h27" stroke="${col}" stroke-width="5"/>
+          <path d="M-31-80h54l-2 28H1l-5-10-5 10h-24Z" fill="${dark}"/>
+          <path d="M-34-132q22-10 43 4l17 51q-31 10-58-1Z" fill="${col}"/>
+          <path d="M-30-111l10 29 43-4 3 9q-29 10-58-1Z" fill="${dark}" stroke="none"/>
+          <path d="M-25-133q10 16 24 4" fill="#FFFCEF"/>
+          <text x="-7" y="-95" text-anchor="middle" fill="#FFFCEF" stroke="none" font-size="23" font-weight="900" transform="${side ? 'translate(-14,0) scale(-1,1)' : ''}">${i + 1 + side * 4}</text>
+          <path d="M-21-116L3-96 40-87M9-115L28-99 57-87" fill="none" stroke="#24332E" stroke-width="17"/>
+          <path d="M-21-116L3-96 40-87M9-115L28-99 57-87" fill="none" stroke="${skin}" stroke-width="10"/>
+          <path d="M-26-121l11 11m20-11 9 10" stroke="${col}" stroke-width="18"/>
+          <ellipse cx="-5" cy="-152" rx="34" ry="31" fill="${skin}"/>
+          <path d="M18-172q18 16 4 34" fill="none" stroke="#A96F4F" stroke-width="5" opacity=".4"/>
+          <circle cx="-33" cy="-148" r="8" fill="${skin}"/>
+          ${hairArt}
+          ${i === 3 ? `<path d="M-39-174q20-21 52-4l7 10h-58Z" fill="${col}"/><path d="M5-171h37q4 8-9 9H6Z" fill="${dark}"/>` : `<path d="M-34-174q26-7 54 3" stroke="#FFFCEF" stroke-width="7"/>`}
+          <path d="M-5-154l8 3m12-2 7-5" fill="none"/>
+          <path d="M1-146v2m17-3v2" stroke-width="5"/>
+          ${i === 1 ? '<g fill="none" stroke-width="3"><rect x="-9" y="-151" width="16" height="14" rx="5"/><rect x="12" y="-154" width="15" height="14" rx="5"/><path d="M7-146h5m-21 2-19-5"/></g>' : ''}
+          <path d="M5-131q8-7 16-2l-2 8Z" fill="#FFFCEF" stroke-width="3"/>
+          <ellipse cx="-10" cy="-135" rx="7" ry="4" fill="#E48D78" stroke="none"/>
+          <path d="M35-88q-4-13 5-14 8 0 9 14M51-88q-3-13 5-14 9 0 10 14" fill="${skin}"/>
+          <path d="M39-97v7m5-6v6m12-7v7m5-6v6" stroke="#A96F4F" stroke-width="2"/>
+        </g>
+      </g>`;
+    }
+    $(gid).innerHTML = art;
+  }
+  function callout(txt, side) {
+    const c = $("callout"); c.textContent = txt;
+    c.style.color = side === null ? "#1F2233" : (side ? "#2457E6" : "#E8413C");
+    c.classList.add("show"); setTimeout(() => c.classList.remove("show"), 1100);
+  }
+
+  // ---------- \u7D50\u675F ----------
+  function finish() {
+    const w = S.pos < 0 ? 0 : S.pos > 0 ? 1 : null;
+    $("win").className = "screen on " + (w === null ? "draw" : w ? "blue" : "red");
+    document.querySelectorAll(".screen").forEach(s => { if (s.id !== "win") s.classList.remove("on"); });
+    $("winName").textContent = w === null ? "\u5E73\u624B\uFF01" : S.names[w] + " \u52DD\u5229\uFF01";
+    $("winLine").textContent = Math.abs(S.pos) >= S.winAt ? "\u628A\u7E69\u5B50\u62C9\u904E\u7DDA\u4E86\uFF01" : `${S.items.length} \u984C\u7B54\u5B8C\uFF0C\u7E69\u7D50\u504F\u5411 ${w === null ? "\u4E2D\u9593" : S.names[w]}`;
+    $("winStats").textContent = `${S.names[0]} \u7B54\u5C0D ${S.stats[0][0]} \u984C\u3001\u7B54\u932F ${S.stats[0][1]} \u984C\u3000\uFF5C\u3000${S.names[1]} \u7B54\u5C0D ${S.stats[1][0]} \u984C\u3001\u7B54\u932F ${S.stats[1][1]} \u984C`;
+    $("winMiss").textContent = S.bothWrong.length
+      ? "\u5169\u968A\u90FD\u7B54\u932F\uFF1A" + [...new Set(S.bothWrong.map(q => `${q.topic}\uFF08${q.level}\uFF09`))].join("\u3001") + " \u2014\u2014 \u503C\u5F97\u56DE\u8AB2\u5802\u88DC\u4E00\u88DC"
+      : "\u6C92\u6709\u5169\u968A\u90FD\u7B54\u932F\u7684\u984C\u76EE\u3002";
+  }
+
+  // ---------- \u9375\u76E4\uFF08\u8001\u5E2B\u7528\uFF09 ----------
+  document.addEventListener("keydown", e => {
+    if (!$("game").classList.contains("on")) return;
+    if ((e.key === " " || e.key === "Enter") && $("nextBtn").classList.contains("show")) { e.preventDefault(); nextQuestion(); return; }
+    if (e.key.toLowerCase() === "f") { toggleFS(); return; }
+    if (!S.q || !S.ctrl[0]) return;
+    const kL = "1234".indexOf(e.key), kR = "zxcv".indexOf(e.key.toLowerCase());
+    if (kL > -1) S.ctrl[0].press(kL);
+    if (kR > -1) S.ctrl[1].press(kR);
+  });
+})();
+
+</script>
+</body>
+</html>
