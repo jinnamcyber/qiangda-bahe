@@ -124,7 +124,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}button,inpu
       <button class="next" id="nextBtn">下一題 ▶</button>
     </div>
   </div>
-  <button class="fs" id="muteBtn">🔊 聲音</button>
+  <button class="fs" id="muteBtn">聲音：開</button>
   <button class="fs" id="fsBtn">全螢幕</button>
 </section>
 
@@ -683,7 +683,7 @@ const TUG_SFX = {"aww": "data:audio/mp4;base64,AAAAHGZ0eXBNNEEgAAACAE00QSBpc29ta
   // 音效：作答區任何按鍵按下都有輕微回饋；靜音鍵
   document.querySelector(".sides").addEventListener("pointerdown", e => { if (e.target.closest("button")) T.audio.play("tap"); }, true);
   const muteBtn = $("muteBtn");
-  const drawMute = () => { muteBtn.textContent = T.audio.isMuted() ? "🔇 靜音" : "🔊 聲音"; };
+  const drawMute = () => { muteBtn.textContent = T.audio.isMuted() ? "聲音：關" : "聲音：開"; };
   drawMute(); muteBtn.addEventListener("click", () => { T.audio.setMuted(!T.audio.isMuted()); drawMute(); });
   on("startBtn", "click", startGame);
   on("exportBtn", "click", () => {
